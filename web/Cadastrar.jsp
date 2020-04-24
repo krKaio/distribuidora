@@ -3,6 +3,8 @@
     Created on : 22/04/2020, 11:59:06
     Author     : KRGUI
 --%>
+<%@page import="meuPacote.ValidaCPF"%>
+<%@page import="java.util.Scanner"%>
 <%@page import="java.math.BigInteger"%>
 <%@page import="java.security.SecureRandom"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*" language="java"%>
@@ -23,55 +25,66 @@
 
         <h1>Hello World!</h1>
         <% /**/
-            SecureRandom random = new SecureRandom();
-            String token = new BigInteger(40, random).toString(32);
-            String codigo = token;
-            /**/
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            try {
-                String nome, email, logadouro, telefone, cep, cidade, uf, bairro, complemento;
-                int idade, cpf, num;
+           // Scanner ler = new Scanner(System.in);
 
-                nome = request.getParameter("name");
-                email = request.getParameter("email");
-                idade = Integer.parseInt(request.getParameter("idade"));
-                cpf = Integer.parseInt(request.getParameter("cpf"));
-                num = Integer.parseInt(request.getParameter("num"));
-                logadouro = request.getParameter("log");
-                cep = request.getParameter("cep");
-                cidade = request.getParameter("city");
-                uf = request.getParameter("uf");
-                bairro = request.getParameter("bairro");
-                complemento = request.getParameter("complemento");
-                telefone = request.getParameter("telefone");
+            String cpf = request.getParameter("cpf");
 
-                String query = "INSERT INTO client ( cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo ) VALUES (";
-                query += cpf + ",'" + nome + "','" + email + "'," + idade + ",'" + telefone + "','" + logadouro + "'," + num + ",'" + cep + "','" + bairro + "','" + cidade + "','" + uf + "','" + complemento + "','" + codigo + "');";
-                int executa = stm.executeUpdate(query);
-                if (executa > 0) {
+           // cpf = ler.next();
 
-                    out.println("Dados gravados com sucesso");
-                    out.println("seu codido de usuario é: " + "<h3>" + codigo + "</h3>");
-
-                } else {
-                    out.println("Erro ao gravar os dados");
-                }
-            } catch (Exception e) {
-                out.println("<p>Algo errado com o banco de dados </p>" + e.getMessage());
-            } finally {
+            // usando os metodos isCPF() e imprimeCPF() da classe "ValidaCPF"
+            if (ValidaCPF.isCPF(cpf) == true) {
+                SecureRandom random = new SecureRandom();
+                String token = new BigInteger(40, random).toString(32);
+                String codigo = token;
+                /**/
+                request.setCharacterEncoding("UTF-8");
+                response.setCharacterEncoding("UTF-8");
                 try {
-                    if (stm != null) {
-                        stm.close();
-                        stm = null;
+                    String nome, email, logadouro, telefone, cep, cidade, uf, bairro, complemento;
+                    int idade, num;
+
+                    nome = request.getParameter("name");
+                    email = request.getParameter("email");
+                    idade = Integer.parseInt(request.getParameter("idade"));
+                    cpf = request.getParameter("cpf");
+                    num = Integer.parseInt(request.getParameter("num"));
+                    logadouro = request.getParameter("log");
+                    cep = request.getParameter("cep");
+                    cidade = request.getParameter("city");
+                    uf = request.getParameter("uf");
+                    bairro = request.getParameter("bairro");
+                    complemento = request.getParameter("complemento");
+                    telefone = request.getParameter("telefone");
+
+                    String query = "INSERT INTO client ( cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo ) VALUES (";
+                    query +="'"+ cpf + "','" + nome + "','" + email + "'," + idade + ",'" + telefone + "','" + logadouro + "'," + num + ",'" + cep + "','" + bairro + "','" + cidade + "','" + uf + "','" + complemento + "','" + codigo + "');";
+                    int executa = stm.executeUpdate(query);
+                    if (executa > 0) {
+
+                        out.println("Dados gravados com sucesso");
+                        out.println("seu codido de usuario é: " + "<h3>" + codigo + "</h3>");
+
+                    } else {
+                        out.println("Erro ao gravar os dados");
                     }
-                    if (con != null) {
-                        con.close();
-                        con = null;
+                } catch (Exception e) {
+                    out.println("<p>Algo errado com o banco de dados </p>" + e.getMessage());
+                } finally {
+                    try {
+                        if (stm != null) {
+                            stm.close();
+                            stm = null;
+                        }
+                        if (con != null) {
+                            con.close();
+                            con = null;
+                        }
+                    } catch (Exception e1) {
+                        out.println(e1);
                     }
-                } catch (Exception e1) {
-                    out.println(e1);
                 }
+            } else {
+                out.println("Erro, CPF invalido !!!\n");
             }
         %>
         <form action="index.html" method="post">
