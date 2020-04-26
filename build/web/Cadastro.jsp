@@ -35,14 +35,14 @@
             <h1>Distribuidoura de Gás</h1>
             <form action="Cadastrar.jsp" method="post">
                 Nome:<input type="text" name="name" placeholder="Nome"><br>
-                Email<input type="text" name="email" placeholder="E-mail"><br>
+                Email:<input type="text" name="email" placeholder="E-mail"><br>
                 CPF:<input type="text" name="cpf" placeholder="CPF"><br>
                 Idade:<input type="text" name="idade" placeholder="Idade"><br>
                 Telefone:<input type="text" name="telefone" placeholder="Telefone"><br>
-                Logadouro:<input type="text" name="log" placeholder="Logadouro"><br>
+                Logradouro:<input type="text" name="log" placeholder="Logradouro"><br>
                 Número:<input type="text" name="num" placeholder="Número da residência"><br>
                 CEP<input type="text" name="cep" placeholder="CEP"><br>
-                Bairro<input type="text" name="bairro" placeholder="Cidade"><br>
+                Bairro:<input type="text" name="bairro" placeholder="Bairro"><br>
                 Cidade:<input type="text" name="city" placeholder="Cidade"><br>
                 UF:<input type="text" name="uf" placeholder="UF"><br>
                 Complemento:<input type="text" name="complemento" placeholder="Complemento"><br>

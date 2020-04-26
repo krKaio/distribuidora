@@ -1,36 +1,36 @@
-create database distribuidora;
-use distribuidora;
+CREATE DATABASE distribuidora;
+USE distribuidora;
 
-CREATE TABLE client (
-  cpf VARCHAR(45) NOT NULL unique,
+CREATE TABLE CLIENT (
+  cpf VARCHAR(45) NOT NULL UNIQUE,
   nome VARCHAR(45) NULL,
   email VARCHAR(45) NULL,
-  idade int NULL,
+  idade INT NULL,
   telefone VARCHAR(11) NULL,
   logadouro VARCHAR(45) NULL,
-  numero int NULL,
+  numero INT NULL,
   cep VARCHAR(10) NULL,
   bairro VARCHAR(45) NULL,
   cidade VARCHAR(45) NULL,
-  uf char(2) NULL,
+  uf CHAR(2) NULL,
   complemento VARCHAR(45) NULL,
-  codigo varchar(8) unicode,
+  codigo VARCHAR(8) UNICODE,
   PRIMARY KEY (cpf));
   
-  INSERT INTO client ( cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo )
+  INSERT INTO CLIENT ( cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo )
   VALUES ("1234", "kaio", "krkaioreis@outlook.com", 22,"1313", "sei la", 642, "08730-270", "sei laaa", "sao paulo", "sp", "esquina av japao", "c5c5dse6");
   
-select * from fatura;
+SELECT * FROM fatura;
 
-create table planos (
-  id_plano int not null auto_increment,
-  tp_plano varchar(45) null,
-  duracao int null,
-  descricao varchar(45) null,
-  valor float null,
-  dt_emissao date null,
-  dt_vencimento date null,
-  primary key (id_plano));
+CREATE TABLE planos (
+  id_plano INT NOT NULL AUTO_INCREMENT,
+  tp_plano VARCHAR(45) NULL,
+  duracao INT NULL,
+  descricao VARCHAR(45) NULL,
+  valor FLOAT NULL,
+  dt_emissao DATE NULL,
+  dt_vencimento DATE NULL,
+  PRIMARY KEY (id_plano));
     
 INSERT INTO planos (tp_plano, duracao, descricao, valor, dt_emissao, dt_vencimento)
   VALUES ("Plano 1", 3, "Plano de 3 meses", 70.00, "2020-04-24", "2020-05-24");
@@ -42,28 +42,48 @@ INSERT INTO planos (tp_plano, duracao, descricao, valor, dt_emissao, dt_vencimen
   VALUES ("Plano 4", 12, "Plano de 12 meses", 40.00, "2020-04-24", "2020-05-24");
 
     
-create table fatura (
-  id_fatura int not null auto_increment,
+CREATE TABLE fatura (
+  id_fatura INT NOT NULL AUTO_INCREMENT,
   f_cpf VARCHAR(45) NOT NULL,
   f_nome VARCHAR(45) NULL,
   f_email VARCHAR(45) NULL,
-  f_tp_plano varchar(45) null,
-  f_descricao varchar(45) null,
-  f_valor float null,
-  f_dt_emissao date null,
-  f_dt_vencimento date null,
+  f_tp_plano VARCHAR(45) NULL,
+  f_descricao VARCHAR(45) NULL,
+  f_valor FLOAT NULL,
+  f_dt_emissao DATE NULL,
+  f_dt_vencimento DATE NULL,
   f_logadouro VARCHAR(45) NULL,
-  f_numero int NULL,
+  f_numero INT NULL,
   f_cep VARCHAR(10) NULL,
   f_bairro VARCHAR(45) NULL,
   f_cidade VARCHAR(45) NULL,
-  f_uf char(2) NULL,
+  f_uf CHAR(2) NULL,
   f_complemento VARCHAR(45) NULL,
-  f_codigo varchar(8) unicode,
-  primary key (id_fatura));
+  f_codigo VARCHAR(8) UNICODE,
+  PRIMARY KEY (id_fatura));
   
-  select f_cpf, f_nome, f_email, f_tp_plano, f_dt_emissao, f_dt_vencimento, f_valor, f_codigo from fatura
-  where f_cpf = "1234";
+  SELECT f_cpf, f_nome, f_email, f_tp_plano, f_dt_emissao, f_dt_vencimento, f_valor, f_codigo FROM fatura
+  WHERE f_cpf = "1234";
   
 INSERT INTO fatura (f_cpf, f_nome, f_email, f_tp_plano, f_descricao, f_valor, f_dt_emissao, f_dt_vencimento, f_logadouro, f_numero, f_cep, f_bairro, f_cidade, f_uf, f_complemento, f_codigo)
   VALUES ("1234", "kaio", "krkaioreis@outlook.com","Plano 1", "Plano de 3 meses", 70.00, "2020-04-24", "2020-05-24", "sei la", 642, "08730-270", "sei laaa", "sao paulo", "sp", "esquina av japao", "c5c5dse6");
+  
+  
+  CREATE TABLE clienteComum (
+  nome VARCHAR(45) NULL,
+  email VARCHAR(45) NOT NULL UNIQUE,
+  senha VARCHAR(45) NULL,
+  telefone VARCHAR(11) NULL,
+  cep VARCHAR(10) NULL,
+  logradouro VARCHAR(45) NULL,
+  bairro VARCHAR(45) NULL,
+  cidade VARCHAR(45) NULL,
+  uf CHAR(2) NULL,
+  numero INT NULL,
+  complemento VARCHAR(45) NULL,
+  PRIMARY KEY (email));
+  
+  INSERT INTO clienteComum ( nome, email, senha, telefone, cep, logradouro, bairro, cidade, uf, numero, complemento )
+  VALUES ("Marcos", "marcosvpcruz@yahoo.com.br", "endmarkz", "132131", "08010-400", "seila", "São Miguel", "São Paulo", "SP", "100", "casa");
+  
+  
