@@ -20,6 +20,7 @@
                 background-color: #F5F5F5
             }
         </style>
+        
     </head>
     <body>
 
@@ -56,9 +57,24 @@
                     complemento = request.getParameter("complemento");
                     telefone = request.getParameter("telefone");
 
-                    String query = "INSERT INTO client ( cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo ) VALUES (";
-                    query +="'"+ cpf + "','" + nome + "','" + email + "'," + idade + ",'" + telefone + "','" + logadouro + "'," + num + ",'" + cep + "','" + bairro + "','" + cidade + "','" + uf + "','" + complemento + "','" + codigo + "');";
-                    int executa = stm.executeUpdate(query);
+                    String query = "INSERT INTO client (cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                //  String query = "INSERT INTO client (cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo ) VALUES (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)";
+                    pstmt = con.prepareStatement(query);
+                    pstmt.setString(1, cpf);
+                    pstmt.setString(2, nome);
+                    pstmt.setString(3, email);
+                    pstmt.setInt(4, idade);
+                    pstmt.setString(5, telefone);
+                    pstmt.setString(6, logadouro);
+                    pstmt.setInt(7, num);
+                    pstmt.setString(8, cep);
+                    pstmt.setString(9, bairro);
+                    pstmt.setString(10, cidade);
+                    pstmt.setString(11, uf);
+                    pstmt.setString(12, complemento);
+                    pstmt.setString(13, codigo);
+                    
+                    int executa = pstmt.executeUpdate();
                     if (executa > 0) {
 
                         out.println("Dados gravados com sucesso");

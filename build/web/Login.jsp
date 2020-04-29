@@ -8,7 +8,7 @@
     if (!cpf.isEmpty() && !codigo.isEmpty()) {
         try {
 
-            sql = "SELECT cpf, nome, codigo FROM client WHERE cpf = " + cpf + " and codigo='" + codigo + "'";
+            sql = "SELECT cpf, nome, codigo, email FROM client WHERE cpf = " + cpf + " and codigo='" + codigo + "'";
             rs = stm.executeQuery(sql);
 
             while (rs.next()) {
@@ -16,6 +16,7 @@
                     session.setAttribute("cpf", cpf);
                     session.setAttribute("codigo", codigo);
                     session.setAttribute("nome", rs.getString("nome"));
+                    session.setAttribute("email", rs.getString("email"));
                     response.sendRedirect("Home.jsp");
                 } else {
                     response.sendRedirect("index.html");

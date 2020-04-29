@@ -19,14 +19,14 @@
      String usuario = "root";
      String senha = "root";
      //Carregar o JDBC Driver
-     String driverName = "com.mysql.jdbc.Driver";
+     String driverName = "com.mysql.cj.jdbc.Driver";
      Class.forName(driverName);
      
      //estabelecer a conexão com o Banco
      String url = "jdbc:mysql://"+servidor+"/"+banco+"?useLegacyDatetimeCode=false&serverTimezone=America/Sao_Paulo&useSSL=false";
      con = DriverManager.getConnection(url, usuario, senha);
     // stm = con.createStatement();
-     stm = con.createStatement();
+    stm = con.createStatement();
      
     }catch(SQLException e){
         out.print("Conecta: " + e.getMessage());

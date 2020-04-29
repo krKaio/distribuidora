@@ -25,7 +25,8 @@
 
     <body>
         <div>
-            <%                String cpf = (String) session.getAttribute("cpf");
+            <%                
+                String cpf = (String) session.getAttribute("cpf");
                 String codigo = (String) session.getAttribute("codigo");
                 String nome = (String) session.getAttribute("nome");
 
@@ -43,18 +44,37 @@
                 <th width="200"><strong>email</strong></th>
                 <th width="80"><strong>codigo do usuario</strong></th>
             </tr>
-            <%    ResultSet rs; //objeto que irá guardar o retorno da consulta
+            <%
+                ResultSet rs; //objeto que irá guardar o retorno da consulta
                 String sql;
                 try {
-                    sql = "SELECT * FROM fatura WHERE f_cpf ='" + cpf + "'";
-                    rs = stm.executeQuery(sql);
+                    sql = "SELECT * FROM fatura WHERE f_cpf = ?";
+                    pstmt = con.prepareStatement(sql);
+                    pstmt.setString(1, cpf);
+                    rs = pstmt.executeQuery();
                     while (rs.next()) {
+                        String Fcpf = rs.getString("f_cpf");
+                        String Fnome = rs.getString("f_nome");
+                        String Femail = rs.getString("f_email");
+                        String Fcodigo = rs.getString("f_codigo");
+                        String Flog = rs.getString("f_logadouro");
+                        String Fnum = rs.getString("f_numero");
+                        String Fcep = rs.getString("f_cep");
+                        String Fbairro = rs.getString("f_bairro");
+                        String Fcidade = rs.getString("f_cidade");
+                        String Fuf = rs.getString("f_uf");
+                        String Fcmpt = rs.getString("f_complemento");
+                        String Fplano = rs.getString("f_tp_plano");
+                        String Fdesc = rs.getString("f_descricao");
+                        String Fvalor = rs.getString("f_valor");
+                        String Fdt_emissao = rs.getString("f_dt_emissao");
+                        String Fdt_vencimento = rs.getString("f_dt_vencimento");
             %>
             <tr>            
-                <td><%= rs.getString("f_cpf")%></td>
-                <td><%= rs.getString("f_nome")%></td>
-                <td><%= rs.getString("f_email")%></td>
-                <td><%= rs.getString("f_codigo")%></td>
+                <td><%= Fcpf%></td>
+                <td><%= Fnome%></td>
+                <td><%= Femail%></td>
+                <td><%= Fcodigo%></td>
             </tr>
 
         </table>

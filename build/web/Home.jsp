@@ -64,10 +64,10 @@
                 <a href="Deslogar.jsp">Deslogar</a>
             </div>
             <nav>
-                <a href="#">Meus Débitos</a>
+                <a href="mailJSP.jsp">Enviar Boletos</a>
                 <a href="lista.jsp">Meus Pagamentos </a>
                 <a href="#">Meu Plano de gás</a>
-                <a href="Planos_gas.jsp">Cadastrar gás encanado</a>
+                <a href="#">Cadastrar gás encanado</a>
                 <a href="#">Comprar botijão</a>
                 
             </nav>

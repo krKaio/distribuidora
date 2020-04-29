@@ -16,23 +16,55 @@
                 border: 3px solid green;
                 padding: 10px;
             }
+            .left{
+                width: 30%;
+                text-align: left;
+                margin-left: 90px;
+                display: inline-block;
+                border: 1px solid green;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+            .right{
+                width: 30%;
+                text-align: right;
+                margin-right: 90px;
+                display: inline-block;  
+                border: 1px solid green;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
             input{
                 margin: 5px; 
-            }   
+            }
         </style>
     </head>
     <body>
         <section> 
             <h1>Distribuidoura de Gás</h1>
+            <div class="left">
+                <h4>Cliente mensal</h4>
             <form action="Login.jsp" method="post">
-                Login:<br> <input type="text" name="cpf" placeholder="CPF"><br>
-                Senha:<br> <input type="password" name="codigo" placeholder="Código de usúario"><br>
-                <input type="submit" value="Logar">
-                <a href="Cadastro.jsp">Cadastro Mensal |</a>
+                Login: <input type="text" name="cpf" placeholder="CPF"><br>
+                Senha: <input type="password" name="codigo" placeholder="Código de usúario"><br>
+                <input type="submit" value="Logar mensal">
+<!--                <a href="Cadastro.jsp">Cadastro Mensal |</a>
                 <a href="CadastroClienteComum.jsp">Cadastro Comum |</a>
-                <a href="Esqueceu.jsp">Esqueceu sua senha?</a>
+                <a href="Esqueceu.jsp">Esqueceu sua senha?</a>-->
             </form>  
-            
+            </div>
+            <div class="right">
+                <h4>Cliente comum</h4>
+                <form action="Login_comum.jsp" method="post">
+                Login: <input type="text" name="email" placeholder="exempo@email.com"><br>
+                Senha: <input type="password" name="senha" placeholder="senha"><br>
+                <input type="submit" value="Logar comum">
+                
+            </form>  
+            </div>
+            <br><a href="Cadastro.jsp">Cadastro Mensal |</a>
+            <a href="CadastroClienteComum.jsp">Cadastro Comum |</a>
+            <a href="Esqueceu.jsp">Esqueceu sua senha?</a>
         </section>
     </body>
 </html>

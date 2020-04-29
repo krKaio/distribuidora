@@ -20,7 +20,7 @@ CREATE TABLE CLIENT (
   INSERT INTO CLIENT ( cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo )
   VALUES ("1234", "kaio", "krkaioreis@outlook.com", 22,"1313", "sei la", 642, "08730-270", "sei laaa", "sao paulo", "sp", "esquina av japao", "c5c5dse6");
   
-SELECT * FROM fatura;
+SELECT * FROM client;
 
 CREATE TABLE planos (
   id_plano INT NOT NULL AUTO_INCREMENT,
@@ -54,7 +54,7 @@ CREATE TABLE fatura (
   f_dt_vencimento DATE NULL,
   f_logadouro VARCHAR(45) NULL,
   f_numero INT NULL,
-  f_cep VARCHAR(10) NULL,
+  f_cep VARCHAR(9) NULL,
   f_bairro VARCHAR(45) NULL,
   f_cidade VARCHAR(45) NULL,
   f_uf CHAR(2) NULL,
@@ -67,7 +67,10 @@ CREATE TABLE fatura (
   
 INSERT INTO fatura (f_cpf, f_nome, f_email, f_tp_plano, f_descricao, f_valor, f_dt_emissao, f_dt_vencimento, f_logadouro, f_numero, f_cep, f_bairro, f_cidade, f_uf, f_complemento, f_codigo)
   VALUES ("1234", "kaio", "krkaioreis@outlook.com","Plano 1", "Plano de 3 meses", 70.00, "2020-04-24", "2020-05-24", "sei la", 642, "08730-270", "sei laaa", "sao paulo", "sp", "esquina av japao", "c5c5dse6");
+  INSERT INTO fatura (f_cpf, f_nome, f_email, f_tp_plano, f_descricao, f_valor, f_dt_emissao, f_dt_vencimento, f_logadouro, f_numero, f_cep, f_bairro, f_cidade, f_uf, f_complemento, f_codigo)
+  VALUES("1234", "kaio", "krkaioreis@outlook.com","Plano 1", "Plano de 3 meses", 111.00, "2020-04-24", "2020-05-24", "Rua Franz Steiner", 642, "08730-270", "Alto Ipiranga", "Mogi das Cruzes", "sp", "esquina av japao", "jo2fp0ga");
   
+  select * from fatura;
   
   CREATE TABLE clienteComum (
   nome VARCHAR(45) NULL,
@@ -86,4 +89,5 @@ INSERT INTO fatura (f_cpf, f_nome, f_email, f_tp_plano, f_descricao, f_valor, f_
   INSERT INTO clienteComum ( nome, email, senha, telefone, cep, logradouro, bairro, cidade, uf, numero, complemento )
   VALUES ("Marcos", "marcosvpcruz@yahoo.com.br", "endmarkz", "132131", "08010-400", "seila", "São Miguel", "São Paulo", "SP", "100", "casa");
   
+  select * from clientecomum;
   

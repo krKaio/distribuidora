@@ -9,12 +9,39 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+            body {
+                text-align: center;
+                background-color: #F5F5F5
+            }
+            section{
+                margin: auto;
+                margin-top: 5%;
+                width: 50%;
+                border: 3px solid green;
+                padding: 10px;
+            }
+            input{
+                margin: 5px; 
+            }   
+        </style>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <form action="Recuperar.jsp" method="post">
-            Email:<br> <input type="text" name="email" placeholder="E-mail"><br>
-            <input type="submit" value="recuperar">
-        </form>
+        <section>
+            <div>
+                <h3>Cliente comum</h3>
+                <form action="RecuperarSenha.jsp" method="post">
+                    Email: <input type="text" name="email" placeholder="exempo@email.com"><br>
+                    <input type="submit" value="Recuperar senha">
+                </form>
+            </div>
+            <div>
+                <h3>Cliente mensal</h3>
+                <form action="RecuperarCodigo.jsp" method="post">
+                    Email: <input type="text" name="email" placeholder="exempo@email.com"><br>
+                    <input type="submit" value="Recuperar código">
+                </form>
+            </div>
+        </section>
     </body>
 </html>
