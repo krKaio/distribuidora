@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <%@ include file="conecta.jsp" %>
 <!DOCTYPE html>
@@ -111,7 +113,7 @@
             </tr>
 
             <tr>
-                <td><%= rs.getString("f_tp_plano")%></td>
+                <td ><%= rs.getString("f_tp_plano")%></td>
                 <td><%= rs.getString("f_descricao")%></td>
                 <td><%= rs.getString("f_valor")%></td>
                 <td><%= rs.getString("f_dt_emissao")%></td>
@@ -128,7 +130,13 @@
             %> 
         </table>
 
-        <br><a href="Home.jsp">Voltar a página inicial</a>   
+        <br><a href="Home.jsp">Voltar a página inicial</a> 
+        <%
+            Date d = new Date();
+            SimpleDateFormat srtDate = new SimpleDateFormat("dd/MM/yyyy");
+            out.println(srtDate.format(d));
+              
+            %> 
 
     </body>
 </html>

@@ -2,7 +2,7 @@ CREATE DATABASE distribuidora;
 USE distribuidora;
 
 CREATE TABLE CLIENT (
-  cpf VARCHAR(45) NOT NULL UNIQUE,
+  cpf VARCHAR(11) NOT NULL UNIQUE,
   nome VARCHAR(45) NULL,
   email VARCHAR(45) NULL,
   idade INT NULL,
@@ -18,59 +18,10 @@ CREATE TABLE CLIENT (
   PRIMARY KEY (cpf));
   
   INSERT INTO CLIENT ( cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo )
-  VALUES ("1234", "kaio", "krkaioreis@outlook.com", 22,"1313", "sei la", 642, "08730-270", "sei laaa", "sao paulo", "sp", "esquina av japao", "c5c5dse6");
+  VALUES ("1234", "kaio", "krkaioreis@outlook.com", 22,"1313", "sei la", 642, "08730270", "sei laaa", "sao paulo", "sp", "esquina av japao", "c5c5dse6");
   
 SELECT * FROM client;
 
-CREATE TABLE planos (
-  id_plano INT NOT NULL AUTO_INCREMENT,
-  tp_plano VARCHAR(45) NULL,
-  duracao INT NULL,
-  descricao VARCHAR(45) NULL,
-  valor FLOAT NULL,
-  dt_emissao DATE NULL,
-  dt_vencimento DATE NULL,
-  PRIMARY KEY (id_plano));
-    
-INSERT INTO planos (tp_plano, duracao, descricao, valor, dt_emissao, dt_vencimento)
-  VALUES ("Plano 1", 3, "Plano de 3 meses", 70.00, "2020-04-24", "2020-05-24");
-INSERT INTO planos (tp_plano, duracao, descricao, valor, dt_emissao, dt_vencimento)
-  VALUES ("Plano 2", 6, "Plano de 6 meses", 60.00, "2020-04-24", "2020-05-24");
-INSERT INTO planos (tp_plano, duracao, descricao, valor, dt_emissao, dt_vencimento)
-  VALUES ("Plano 3", 9, "Plano de 9 meses", 50.00, "2020-04-24", "2020-05-24");
-INSERT INTO planos (tp_plano, duracao, descricao, valor, dt_emissao, dt_vencimento)
-  VALUES ("Plano 4", 12, "Plano de 12 meses", 40.00, "2020-04-24", "2020-05-24");
-
-    
-CREATE TABLE fatura (
-  id_fatura INT NOT NULL AUTO_INCREMENT,
-  f_cpf VARCHAR(45) NOT NULL,
-  f_nome VARCHAR(45) NULL,
-  f_email VARCHAR(45) NULL,
-  f_tp_plano VARCHAR(45) NULL,
-  f_descricao VARCHAR(45) NULL,
-  f_valor FLOAT NULL,
-  f_dt_emissao DATE NULL,
-  f_dt_vencimento DATE NULL,
-  f_logadouro VARCHAR(45) NULL,
-  f_numero INT NULL,
-  f_cep VARCHAR(9) NULL,
-  f_bairro VARCHAR(45) NULL,
-  f_cidade VARCHAR(45) NULL,
-  f_uf CHAR(2) NULL,
-  f_complemento VARCHAR(45) NULL,
-  f_codigo VARCHAR(8) UNICODE,
-  PRIMARY KEY (id_fatura));
-  
-  SELECT f_cpf, f_nome, f_email, f_tp_plano, f_dt_emissao, f_dt_vencimento, f_valor, f_codigo FROM fatura
-  WHERE f_cpf = "1234";
-  
-INSERT INTO fatura (f_cpf, f_nome, f_email, f_tp_plano, f_descricao, f_valor, f_dt_emissao, f_dt_vencimento, f_logadouro, f_numero, f_cep, f_bairro, f_cidade, f_uf, f_complemento, f_codigo)
-  VALUES ("1234", "kaio", "krkaioreis@outlook.com","Plano 1", "Plano de 3 meses", 70.00, "2020-04-24", "2020-05-24", "sei la", 642, "08730-270", "sei laaa", "sao paulo", "sp", "esquina av japao", "c5c5dse6");
-  INSERT INTO fatura (f_cpf, f_nome, f_email, f_tp_plano, f_descricao, f_valor, f_dt_emissao, f_dt_vencimento, f_logadouro, f_numero, f_cep, f_bairro, f_cidade, f_uf, f_complemento, f_codigo)
-  VALUES("1234", "kaio", "krkaioreis@outlook.com","Plano 1", "Plano de 3 meses", 111.00, "2020-04-24", "2020-05-24", "Rua Franz Steiner", 642, "08730-270", "Alto Ipiranga", "Mogi das Cruzes", "sp", "esquina av japao", "jo2fp0ga");
-  
-  select * from fatura;
   
   CREATE TABLE clienteComum (
   nome VARCHAR(45) NULL,
@@ -86,8 +37,107 @@ INSERT INTO fatura (f_cpf, f_nome, f_email, f_tp_plano, f_descricao, f_valor, f_
   complemento VARCHAR(45) NULL,
   PRIMARY KEY (email));
   
-  INSERT INTO clienteComum ( nome, email, senha, telefone, cep, logradouro, bairro, cidade, uf, numero, complemento )
-  VALUES ("Marcos", "marcosvpcruz@yahoo.com.br", "endmarkz", "132131", "08010-400", "seila", "São Miguel", "São Paulo", "SP", "100", "casa");
+  INSERT INTO clienteComum ( cpf, nome, email, senha, telefone, cep, logradouro, bairro, cidade, uf, numero, complemento )
+  VALUES ("123546", "Marcos", "marcosvpcruz@yahoo.com.br", "endmarkz", "132131", "08010-400", "seila", "São Miguel", "São Paulo", "SP", "100", "casa");
   
   select * from clientecomum;
+  #####################################################################################################################################################
   
+  create table estoque(
+  modelo varchar(20) not null,
+  qntd_estoque int not null,
+  qntd_min int not null,
+  qntd_max int not null,
+  valor decimal(5,2) not null,
+  primary key (modelo)
+  );
+  
+  INSERT INTO estoque (modelo, qntd_estoque, qntd_min, qntd_max, valor)
+  VALUES ("botijao", 50, 25, 100, 70.00);
+  
+UPDATE estoque SET qntd_estoque = qntd_estoque - 2 WHERE modelo = "botijao" ;
+  select * from estoque;
+  
+  create table boleto (
+  modelo varchar(20) not null,
+  qntd int not null,
+  cod int not null auto_increment,
+  cpf varchar(45) not null,
+  valor decimal (5,2) not null,
+  dt date,
+  primary key (cod),
+  constraint fk_cod foreign key (cpf) references client(cpf),
+  constraint fk_gas foreign key (modelo) references estoque(modelo)
+  );
+  
+  INSERT INTO boleto (modelo, qntd, cpf, valor)
+  values ("mensal", 1, "12345", 50.00);
+  
+  select * from estoque;
+  
+  create table pagamento(
+  cod_boleto int not null,
+  modelo varchar(20) not null,
+  pagou varchar(3),
+  cod int not null,
+  cpf varchar(45) not null,
+  valor decimal(5,2) not null,
+  valor_pago decimal(5,2),
+  primary key (cod_boleto),
+  constraint fk_cpf foreign key (cpf) references client(cpf),
+  constraint fk_blt foreign key (cod) references boleto(cod),
+  constraint fk_mdlgas foreign key (modelo) references estoque(modelo)
+  );
+  insert into pagamento (cod_boleto, modelo, pagou, cod, cpf, valor, valor_pago)
+  values (132256, "mensal", "nao", 12345, "12345", 29.99, 00.00);
+   select * from pagamento;
+  
+DELIMITER ;;
+ CREATE TRIGGER `Tgr_Update` AFTER insert ON `boleto` FOR EACH ROW BEGIN
+        UPDATE estoque SET qntd_estoque = qntd_estoque - NEW.qntd
+        WHERE modelo = NEW.modelo;
+        END ;;
+DELIMITER ;
+
+create table BoletoPago(
+ cod_boleto int not null,
+ modelo varchar(20) not null,
+ valor decimal(5,2) not null,
+ primary key (cod_boleto),
+ constraint fk_BLP foreign key (cod_boleto) references pagamento(cod_boleto),
+ constraint fk_mdgas foreign key (modelo) references estoque(modelo)
+ );
+ select * from BoletoPago;
+ drop trigger Tgr_Insert;
+ 
+ DELIMITER ;;
+ CREATE TRIGGER `Tgr_Insert` AFTER insert ON `BoletoPago` FOR EACH ROW BEGIN
+        UPDATE pagamento SET valor_pago = valor
+        WHERE cod_boleto = NEW.cod_boleto;
+        END ;;
+DELIMITER ;
+
+insert into BoletoPago (cod_boleto, modelo, valor) values (1112, "mensal", 29.99);
+
+INSERT INTO pagamento (cod_boleto, modelo, cod, cpf, valor, valor_pago) values(1113,'mensal',(select max(cod) as cod from boleto),"12345",29.99, 0.00);
+
+#############################################################################################################################################################
+
+  create table venda(
+	id_venda int auto_increment,
+    nome varchar(45) not null,
+    cpf varchar (11) not null,
+    descricao varchar(20) not null,
+    qtd int not null,
+    valor float not null,
+    total float not null,
+    dt_venda date,
+    primary key(id_venda)
+  );
+  INSERT INTO venda (nome, cpf, descricao, qtd, valor, total, dt_venda)
+  VALUES ("kaio", "12345", "botijao", 1, 80.00, 80.00, "11/04/2020");
+  select * from venda where cpf = "12345";
+  SELECT * FROM venda ;
+  select * from estoque where modelo = "botijao";
+  
+  UPDATE venda SET pago = 'sim' WHERE id_venda = 18 and total = 210.0;

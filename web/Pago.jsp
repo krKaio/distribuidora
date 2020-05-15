@@ -1,15 +1,10 @@
-<%-- 
-    Document   : DadosLogin
-    Created on : 24/03/2020, 08:06:13
-    Author     : KRGUI
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
+<%@include file="conecta.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home</title>
+        <meta charset="utf-8" />
+        <title>Untitled Document</title>   
         <style>
             body {
                 text-align: center;
@@ -35,7 +30,7 @@
                 padding: 8px;
             }.botaoEnviar {
                 margin-top: 2%;
-                width: 30%;
+                width: 90%;
                 text-align: center;
                 padding: 10px;
                 border: 1px solid #eee;
@@ -136,8 +131,6 @@
                     String cpf = (String) session.getAttribute("cpf");
                     String codigo = (String) session.getAttribute("codigo");
                     String nome = (String) session.getAttribute("nome");
-                    String email = (String) session.getAttribute("email");
-                    String senha = (String) session.getAttribute("senha");
 
                     if (nome == null) {
                         response.sendRedirect("Login.jsp");
@@ -161,17 +154,42 @@
                 <a class="btn" href="Perfil.jsp">Minha conta</a>
             </nav>
             <hr>
-            <div class="btj">
-                <b>Compre seu botijão de gás</b><br>
-                <img src="imagens/botijao.png">
-                <form action="Venda.jsp" method="post">
-                    <b>Valor: R$ 70.00</b>
-                    <option value="quantidade">escolha a quantidade</option>
-                    <input name="qtd" type="text" placeholder="quantdade">
 
-                    <input type="submit" value="Compra" class="botaoEnviar">
-                </form>
-            </div>
+            <%    String sql, SQL;
+                ResultSet rs = null;
+                int id = Integer.parseInt(request.getParameter("id"));
+                float vl = Float.parseFloat(request.getParameter("vl"));
+
+                SQL = "SELECT * FROM venda WHERE id_venda = ?  and total = ?";
+                pstmt = con.prepareStatement(SQL);
+                pstmt.setInt(1, id);
+                pstmt.setFloat(2, vl);
+                rs = pstmt.executeQuery();
+                if (rs.next() == true) {
+                    //atualiza a quantidade do estoque
+                    sql = "UPDATE venda SET pago = 'sim' WHERE id_venda = " + id + " and total = " + vl;
+                    stm.executeUpdate(sql);
+
+                    SQL = "SELECT * FROM venda WHERE pago = ? and id_venda = ?";
+                    pstmt = con.prepareStatement(SQL);
+                    pstmt.setString(1, "sim");
+                    pstmt.setInt(2, id);
+                    rs = pstmt.executeQuery();
+                    if (rs.next() == true) {
+                        int qtd = Integer.parseInt(rs.getString("qtd"));
+                        String query = "UPDATE estoque SET qntd_estoque = qntd_estoque - " + qtd + " WHERE modelo = 'botijao'";
+                        pstmt.executeUpdate(query);
+                        out.println("Pagamento realizado ");
+                    }
+                } else {
+                    out.print("<script>alert('Por favor, informe o mesmo valor que o total!');"
+                            + "history.go(-1);</script>");
+                }
+
+            %>
+            <form action="Pagar.jsp" method="post">
+                <input type="submit" value="VOLTAR" class="botaoEnviar">
+            </form>
         </section>
     </body>
 </html>

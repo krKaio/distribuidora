@@ -1,15 +1,12 @@
-<%-- 
-    Document   : DadosLogin
-    Created on : 24/03/2020, 08:06:13
-    Author     : KRGUI
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
+<%@ include file="conecta.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home</title>
+        <meta charset="utf-8" />
+        <title>Boletos em aberto</title>
         <style>
             body {
                 text-align: center;
@@ -35,7 +32,7 @@
                 padding: 8px;
             }.botaoEnviar {
                 margin-top: 2%;
-                width: 30%;
+                width: 90%;
                 text-align: center;
                 padding: 10px;
                 border: 1px solid #eee;
@@ -124,11 +121,12 @@
                 height: 60px;
             }
         </style>
+
     </head>
+
     <body>
-        <section id="caixa"> 
-            <h2 class="titulo">Distribuidora de Gás</h2>
-            <hr>
+        <section>
+            <h1>Distituidora de Gás</h1>
             <div class="left">
                 <%                    request.setCharacterEncoding("UTF-8");
                     response.setCharacterEncoding("UTF-8");
@@ -136,8 +134,6 @@
                     String cpf = (String) session.getAttribute("cpf");
                     String codigo = (String) session.getAttribute("codigo");
                     String nome = (String) session.getAttribute("nome");
-                    String email = (String) session.getAttribute("email");
-                    String senha = (String) session.getAttribute("senha");
 
                     if (nome == null) {
                         response.sendRedirect("Login.jsp");
@@ -161,16 +157,89 @@
                 <a class="btn" href="Perfil.jsp">Minha conta</a>
             </nav>
             <hr>
-            <div class="btj">
-                <b>Compre seu botijão de gás</b><br>
-                <img src="imagens/botijao.png">
-                <form action="Venda.jsp" method="post">
-                    <b>Valor: R$ 70.00</b>
-                    <option value="quantidade">escolha a quantidade</option>
-                    <input name="qtd" type="text" placeholder="quantdade">
 
-                    <input type="submit" value="Compra" class="botaoEnviar">
-                </form>
+            <div id="conterner">
+
+                <strong>BOLETOS EM ABERTOS</strong>
+            <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
+                String sql;
+                String pg = "nao";
+
+                try {
+                    sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
+                    pstmt = con.prepareStatement(sql);
+                    pstmt.setString(1, cpf);
+                    pstmt.setString(2, pg);
+                    rs = pstmt.executeQuery();
+                    if (rs.next() == true) {
+            %>
+
+                <table id="tabe">
+                    <tr>
+                        <th width="200"><strong>Cpf</strong></th>
+                        <th width="200"><strong>nome</strong></th>
+                        <th width="200"><strong>quantidade</strong></th>
+                        <th width="200"><strong>descrisção</strong></th>
+                        <th width="80"><strong>valor</strong></th>
+                        <th width="80"><strong>total</strong></th>
+                        <th width="100"><strong>Data</strong></th>
+                        <th width="100"><strong>Pago</strong></th>
+                    </tr>
+
+                    <%
+                        while (rs.next()) {
+                            String pago = rs.getString("pago");
+                            String v_nome = rs.getString("nome");
+                            String v_cpf = rs.getString("cpf");
+                            int qtd = rs.getInt("qtd");
+                            String desc = rs.getString("descricao");
+                            float valor = rs.getFloat("valor");
+                            float total = rs.getFloat("total");
+                            String dt = rs.getString("dt_venda");
+                            if (pago.equals("nao")) {
+
+                    %>
+                    <tr>            
+                        <td><%= v_cpf%></td>
+                        <td><%= v_nome%></td>
+                        <td><%= desc%></td>
+                        <td><%= qtd%></td>
+                        <td><%= valor%></td>
+                        <td><%= total%></td>
+                        <td><%= dt%></td>
+                        <td><%= pago%></td>
+                        <td><a href="Pagando.jsp?id=<%= rs.getString("id_venda")%>"><input type="button" name="pagar" value="PAGAR" class="botaoEnviar"></a></td>
+                    </tr>
+                    <%
+                            }
+                        }
+                        rs.close();
+                        stm.close();
+                        con.close();
+                    } else {
+                    %>
+                    <p><strong>Você não possui pagamentos pendentes</strong></p>
+                    <%
+                            }
+                        } catch (Exception ex) {
+                            out.print("<br/><br/>Desculpe, mas algo errado aconteceu abrindo este BD...<br/><br/>");
+                        } finally {
+                            try {
+                                if (stm != null) {
+                                    stm.close();
+                                    stm = null;
+                                }
+                                if (con != null) {
+                                    con.close();
+                                    con = null;
+                                }
+                            } catch (Exception e1) {
+                                out.println("<h3>" + e1 + "</h3>");
+                            }
+                        }
+                    %> 
+                </table>
+                <br><a class="bt" href="Home.jsp">Voltar a página inicial</a> 
             </div>
         </section>
     </body>

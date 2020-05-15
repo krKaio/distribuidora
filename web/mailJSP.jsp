@@ -26,6 +26,7 @@
         response.sendRedirect("Login.jsp");
     } else {
         out.println("Bem vindo, " + nome + "<br>");
+        out.println("<h3>Em desenvolvimento</h3>");
     }
     String result;
     ResultSet rs; //objeto que irá guardar o retorno da consulta

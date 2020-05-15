@@ -1,15 +1,10 @@
-<%-- 
-    Document   : DadosLogin
-    Created on : 24/03/2020, 08:06:13
-    Author     : KRGUI
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
+<%@ include file="conecta.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home</title>
+        <meta charset="utf-8" />
+        <title>Untitled Document</title>   
         <style>
             body {
                 text-align: center;
@@ -35,7 +30,7 @@
                 padding: 8px;
             }.botaoEnviar {
                 margin-top: 2%;
-                width: 30%;
+                width: 10%;
                 text-align: center;
                 padding: 10px;
                 border: 1px solid #eee;
@@ -123,7 +118,11 @@
                 width: 50px;
                 height: 60px;
             }
+            .id{
+                display: none;
+            }
         </style>
+
     </head>
     <body>
         <section id="caixa"> 
@@ -136,8 +135,6 @@
                     String cpf = (String) session.getAttribute("cpf");
                     String codigo = (String) session.getAttribute("codigo");
                     String nome = (String) session.getAttribute("nome");
-                    String email = (String) session.getAttribute("email");
-                    String senha = (String) session.getAttribute("senha");
 
                     if (nome == null) {
                         response.sendRedirect("Login.jsp");
@@ -161,17 +158,47 @@
                 <a class="btn" href="Perfil.jsp">Minha conta</a>
             </nav>
             <hr>
-            <div class="btj">
-                <b>Compre seu botijão de gás</b><br>
-                <img src="imagens/botijao.png">
-                <form action="Venda.jsp" method="post">
-                    <b>Valor: R$ 70.00</b>
-                    <option value="quantidade">escolha a quantidade</option>
-                    <input name="qtd" type="text" placeholder="quantdade">
 
-                    <input type="submit" value="Compra" class="botaoEnviar">
-                </form>
-            </div>
+            <%    String sql;
+                ResultSet rs = null;
+                try {
+                    sql = "SELECT * FROM venda WHERE id_venda = ?";
+                    pstmt = con.prepareStatement(sql);
+                    pstmt.setString(1, request.getParameter("id"));
+                    rs = pstmt.executeQuery();
+                    //        stm.close();
+                    //       con.close();
+                    //response.sendRedirect("Pagar.jsp");
+                    while (rs.next()) {
+            %>
+            <form action="Pago.jsp" method="post">
+                Valor a pagar: <%=rs.getString("total")%><br>
+                Informe o valor: <input type="text" name="vl" placeholder=<%=rs.getString("total")%>>
+
+                <input type="submit" name="pagando"  value="PAGAR" class="botaoEnviar">
+                <input class="id" type="text" name="id" value="<%=rs.getString("id_venda")%>">
+
+            </form>
+
+            <%
+                    }
+                } catch (SQLException ex) {
+                    out.print(ex.getMessage());
+                } finally {
+                    try {
+                        if (stm != null) {
+                            stm.close();
+                            stm = null;
+                        }
+                        if (con != null) {
+                            con.close();
+                            con = null;
+                        }
+                    } catch (Exception e1) {
+                        out.println("<h3>" + e1 + "</h3>");
+                    }
+                }
+            %>
         </section>
     </body>
 </html>

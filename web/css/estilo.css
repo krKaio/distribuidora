@@ -1,0 +1,14 @@
+*{
+        font-family:Verdana, Geneva, sans-serif;
+        font-size:11pt;	
+}
+.cabecalho {
+        background-color:#33C;	
+        color:#FFF;
+}
+.linha {   
+    background-color:#CFC;	
+}
+td {
+    padding: 10px;
+}

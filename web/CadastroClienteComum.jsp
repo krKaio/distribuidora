@@ -13,156 +13,234 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cadastro Cliente Comum</title>
-        <style>
-            body {
-                text-align: center;
-                background-color: #F5F5F5
-            }
-            section{
-                margin: auto;
-                margin-top: 5%;
-                width: 50%;
-                border: 3px solid green;
-                padding: 10px;
-            }
-            input{
-                margin: 5px; 
-            }   
-            
-        </style>
-         <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-            
-    <!-- Adicionando Javascript -->
-    <script type="text/javascript" >
-        //Codigo para puxar dados através do CEP digitado
-        $(document).ready(function() {
-          
-            function limpa_formulário_cep() {
-                // Limpa valores do formulário de cep.
-                $("#log").val("");
-                $("#bairro").val("");
-                $("#city").val("");
-                $("#uf").val("");
-            }
-            
-            //Quando o campo cep perde o foco.
-            $("#cep").blur(function() {
+       
+       
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 
-                //Nova variável "cep" somente com dígitos.
-                var cep = $(this).val().replace(/\D/g, '');
+        <!-- Adicionando Javascript -->
+        <script type="text/javascript" >
+            //Codigo para puxar dados através do CEP digitado
+            $(document).ready(function () {
 
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
+                function limpa_formulário_cep() {
+                    // Limpa valores do formulário de cep.
+                    $("#log").val("");
+                    $("#bairro").val("");
+                    $("#city").val("");
+                    $("#uf").val("");
+                }
 
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
+                //Quando o campo cep perde o foco.
+                $("#cep").blur(function () {
 
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
+                    //Nova variável "cep" somente com dígitos.
+                    var cep = $(this).val().replace(/\D/g, '');
 
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        $("#log").val("...");
-                        $("#bairro").val("...");
-                        $("#city").val("...");
-                        $("#uf").val("...");
+                    //Verifica se campo cep possui valor informado.
+                    if (cep != "") {
 
-                        //Consulta o webservice viacep.com.br/
-                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+                        //Expressão regular para validar o CEP.
+                        var validacep = /^[0-9]{8}$/;
 
-                            if (!("erro" in dados)) {
-                                //Atualiza os campos com os valores da consulta.
-                                $("#log").val(dados.logradouro);
-                                $("#bairro").val(dados.bairro);
-                                $("#city").val(dados.localidade);
-                                $("#uf").val(dados.uf);
-                            } //end if.
-                            else {
-                                //CEP pesquisado não foi encontrado.
-                                limpa_formulário_cep();
-                                alert("CEP não encontrado.");
-                            }
-                        });
+                        //Valida o formato do CEP.
+                        if (validacep.test(cep)) {
+
+                            //Preenche os campos com "..." enquanto consulta webservice.
+                            $("#log").val("...");
+                            $("#bairro").val("...");
+                            $("#city").val("...");
+                            $("#uf").val("...");
+
+                            //Consulta o webservice viacep.com.br/
+                            $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+                                if (!("erro" in dados)) {
+                                    //Atualiza os campos com os valores da consulta.
+                                    $("#log").val(dados.logradouro);
+                                    $("#bairro").val(dados.bairro);
+                                    $("#city").val(dados.localidade);
+                                    $("#uf").val(dados.uf);
+                                } //end if.
+                                else {
+                                    //CEP pesquisado não foi encontrado.
+                                    limpa_formulário_cep();
+                                    alert("CEP não encontrado.");
+                                }
+                            });
+                        } //end if.
+                        else {
+                            //cep é inválido.
+                            limpa_formulário_cep();
+                            alert("Formato de CEP inválido.");
+                        }
                     } //end if.
                     else {
-                        //cep é inválido.
+                        //cep sem valor, limpa formulário.
                         limpa_formulário_cep();
-                        alert("Formato de CEP inválido.");
                     }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
+                });
             });
-        });
-    </script>
-    
-        <script type="text/javascript">
-            
+        </script>
+
+<!--        <script type="text/javascript">
+
             // Codigo JavaScript para validar campos do form
-            function validar(){
+            function validar() {
                 //codigo para validar Nome
                 var semNome = document.meuForm.nome.value;
-                if(semNome == ""){
+                if (semNome == "") {
                     alert("Digite um nome");
                     document.meuForm.nome.focus();
                     return false;
                 }
-                
+                //codigo para validar CPF
+                var semCpf = document.meuForm.cpf.value;
+                if (semCpf == "") {
+                    alert("Digite um cpf");
+                    document.meuForm.cpf.focus();
+                    return false;
+                }
+
                 //codigo para validar email
                 var semEmail = document.meuForm.email.value;
-                if(semEmail == ""){
+                if (semEmail == "") {
                     alert("Digite um email");
                     document.meuForm.email.focus();
                     return false;
                 }
-                
+
                 //codigo para validar Senha
                 var semSenha = document.meuForm.senha.value;
-                if(semSenha == ""){
+                if (semSenha == "") {
                     alert("Digite uma senha");
                     document.meuForm.senha.focus();
                     return false;
                 }
-                
+
                 //codigo para validar CEP
                 var semCEP = document.meuForm.cep.value;
-                if(semCEP == ""){
+                if (semCEP == "") {
                     alert("Digite um CEP");
                     document.meuForm.cep.focus();
                     return false;
                 }
-                
-                 //codigo para validar CEP
+
+                //codigo para validar CEP
                 var semNum = document.meuForm.num.value;
-                if(semNum == ""){
+                if (semNum == "") {
                     alert("Digite um numero da residência");
                     document.meuForm.num.focus();
                     return false;
                 }
-            }  
-        </script>
+            }
+        </script>-->
+         <style>
+
+            * {
+                font-family: arial, sans-serif;
+            }
+
+            body {
+                background-color: #F8F8FF;
+            }
+
+            span {
+                font-weight: bold;
+            }
+
+            hr {
+                width: 50%;
+                background-color: #000;
+                height: 2px;
+            }
+
+            input {
+                border-radius: 5px;
+                border: 1px solid #DEB887;
+                height: 20px; 
+            }
+
+            #caixa {
+                margin: auto;
+                margin-top: 1%;
+                width: 70%;
+                border: 3px solid #000;
+                padding: 10px;
+                background-color: #F5F5F5;
+            }
+
+            #cliente {
+                width: 95%;
+                border: 1px solid #000;
+                padding: 10px;
+                border-radius: 3px;
+                margin-left: 1%;
+                margin-bottom: 3%;
+            }
+
+            #endereco {
+                width: 95%;
+                border: 1px solid #000;
+                padding: 10px;
+                margin-top: 1%;
+                border-radius: 3px;
+                margin-left: 1%;
+            }
+
+            .botaoEnviar {
+                /* padding: 20px; */
+                margin-top: 15px;
+                margin-left: 5px;
+                border: 1px solid #eee;
+                border-radius: 5px;
+                background-color: #ADD8E6;
+                font-size: 12px;
+                font-weight: bold;
+                color: #000;	
+                border: 1px solid #000;
+                height: 30px;
+                width: 100px;
+            }
+
+            .titulo {
+                text-align: center;
+            }
+
+        </style>
     </head>
     <body>
-        <section>
-            <h1>Distribuidora de Gás</h1>
+        <section id="caixa">
+            <h2 class="titulo">Distribuidora de Gás</h2>
+            <hr>
+            <br>
             <form name="meuForm" action="CadastrarClienteComum.jsp" method="post">
-                Nome:<input type="text" name="nome" placeholder="Nome"><br>
-                Email:<input type="text" name="email" placeholder="exemplo@gmail.com"><br>
-                Senha:<input type="password" name="senha" placeholder="Senha"><br>
-                Telefone:<input type="text" name="telefone" placeholder="Telefone"><br>
-                CEP:<input type="text" id="cep" name="cep" placeholder="CEP"><br>
-                Logradouro:<input type="text" id="log" name="log" placeholder="Logradouro"><br>
-                Bairro:<input type="text" id="bairro" name="bairro" placeholder="Bairro"><br>
-                Cidade:<input type="text" id="city" name="city" placeholder="Cidade"><br>
-                UF:<input type="text" id="uf" name="uf" placeholder="UF"><br>
-                Número:<input type="text" id="num" name="num" placeholder="Número da residência"><br>
-                Complemento:<input type="text" name="complemento" placeholder="Complemento"><br>
-                <input type="submit" onClick="return validar();" value="Cadastrar">
+                <ul>
+                    <li>DIGITE SUAS INFORMAÇÕES</li>
+                </ul>
+                <div id="cliente">
+                    <span>Nome:</span> <input type="text" name="nome" placeholder="Nome" style="width: 50%; margin-left: 25px"><br><br>
+                    <span>CPF:</span> <input type="text" name="cpf" placeholder="CPF" style="width: 50%; margin-left: 35px"><br><br>
+                    <span>Email:</span> <input type="text" name="email" placeholder="E-mail" style="width: 50%; margin-left: 25px"><br><br>
+                    <span>Senha:</span> <input type="text" name="senha" placeholder="Senha" style="margin-left: 20px"><br><br>
+                    <span>Telefone:</span> <input type="text" name="telefone" placeholder="Telefone" style="margin-left: 5px"><br><br>
+                </div>
+                <ul>
+                    <li>DIGITE SEU ENDEREÇO DE ENTREGA</li>
+                </ul>
+                <div id="endereco">
+                    <span>CEP:</span> <input type="text" id="cep" name="cep" placeholder="CEP" style="margin-left: 73px"><br><br>
+                    <span>Logradouro:</span> <input type="text" id="log" name="log" placeholder="Logradouro" style="margin-left: 17px; width: 50%"><br><br>
+                    <span>Bairro:</span> <input type="text" id="bairro" name="bairro" placeholder="Bairro" style="margin-left: 60px; width: 50%"><br><br>
+                    <span>Cidade:</span> <input type="text" id="city" name="city" placeholder="Cidade" style="margin-left: 55px; width: 50%"><br><br>
+                    <span>UF:</span> <input type="text" id="uf" name="uf" placeholder="UF" style=" margin-left: 88px; width: 5%"><br><br>
+                    <span>Número:</span> <input type="text" id="num" name="num" placeholder="Número da residência"style="margin-left: 50px; width: 16%"><br><br>
+                    <span>Complemento:</span> <input type="text" name="complemento" placeholder="Complemento" style="margin-left: 3px; width: 50%"><br><br>
+                </div>
+                <input class="botaoEnviar" type="submit" onClick="return validar();" value="Cadastrar" >
             </form>
-             
+
         </section>
     </body>
 </html>

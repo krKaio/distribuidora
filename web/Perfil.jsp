@@ -1,7 +1,7 @@
 <%-- 
-    Document   : DadosLogin
-    Created on : 24/03/2020, 08:06:13
-    Author     : KRGUI
+    Document   : Perfil
+    Created on : 30/04/2020, 10:27:25
+    Author     : Kings family
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home</title>
+        <title>Perfil</title>
         <style>
             body {
                 text-align: center;
@@ -35,7 +35,7 @@
                 padding: 8px;
             }.botaoEnviar {
                 margin-top: 2%;
-                width: 30%;
+                width: 90%;
                 text-align: center;
                 padding: 10px;
                 border: 1px solid #eee;
@@ -136,8 +136,6 @@
                     String cpf = (String) session.getAttribute("cpf");
                     String codigo = (String) session.getAttribute("codigo");
                     String nome = (String) session.getAttribute("nome");
-                    String email = (String) session.getAttribute("email");
-                    String senha = (String) session.getAttribute("senha");
 
                     if (nome == null) {
                         response.sendRedirect("Login.jsp");
@@ -161,17 +159,7 @@
                 <a class="btn" href="Perfil.jsp">Minha conta</a>
             </nav>
             <hr>
-            <div class="btj">
-                <b>Compre seu botijão de gás</b><br>
-                <img src="imagens/botijao.png">
-                <form action="Venda.jsp" method="post">
-                    <b>Valor: R$ 70.00</b>
-                    <option value="quantidade">escolha a quantidade</option>
-                    <input name="qtd" type="text" placeholder="quantdade">
-
-                    <input type="submit" value="Compra" class="botaoEnviar">
-                </form>
-            </div>
         </section>
+        <h3>Em desemvolvimento</h3>
     </body>
 </html>

@@ -5,65 +5,134 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
+            * {
+                font-family: arial, sans-serif;
+            }
+
             body {
+                background-color: #F8F8FF;
+            }
+
+            a {
+                margin-left: 14%;
                 text-align: center;
-                background-color: #F5F5F5
+                padding: 10px;
+                border: 1px solid #eee;
+                border-radius: 5px;
+                background-color: #ADD8E6;
+                font-size: 12px;
+                font-weight: bold;
+                color: #000;	
+                text-decoration: none;
+                border: 1px solid #000;
             }
-            section{
-                margin: auto;
-                margin-top: 5%;
+
+            h4 {
+                text-align: center;
+                margin-top: 1%;
+            }
+
+            hr {
                 width: 50%;
-                border: 3px solid green;
-                padding: 10px;
+                background-color: #000;
+                height: 2px;
             }
-            .left{
+
+            #caixa {
+                margin: auto;
+                margin-top: 10%;
+                width: 70%;
+                border: 3px solid #000;
+                padding: 10px;
+                padding-bottom: 30px;
+                background-color: #F5F5F5;
+            }
+
+            #cliente_mensal {
                 width: 30%;
-                text-align: left;
-                margin-left: 90px;
+                margin-left: 17%;
                 display: inline-block;
-                border: 1px solid green;
+                border: 1px solid #000;
                 padding: 10px;
-                margin-bottom: 20px;
+                margin-top: 3%;
+                border-radius: 5px;
+
             }
-            .right{
+
+            #cliente_comum {
                 width: 30%;
-                text-align: right;
-                margin-right: 90px;
+                margin-right: 17%;    
                 display: inline-block;  
-                border: 1px solid green;
+                border: 1px solid #000;
                 padding: 10px;
-                margin-bottom: 20px;
+                border-radius: 5px;
+            } 
+
+            #botao_comum { 
+                text-align: center; 
             }
-            input{
-                margin: 5px; 
+
+            #botao_mensal {
+                text-align: center;
             }
+
+            .titulo {
+                text-align: center;
+            }
+
+            .botaoEnviar {
+                margin-top: 2%;
+                width: 100px;
+                text-align: center;
+                padding: 10px;
+                border: 1px solid #eee;
+                border-radius: 5px;
+                background-color: #ADD8E6;
+                font-size: 12px;
+                font-weight: bold;
+                border: 1px solid #000;
+            }
+
+            .input {
+                margin-top: 5%;
+                border-radius: 5px;
+                height: 20px;
+                margin-left: 10px;
+                border: 1px solid #DEB887;
+            }
+
+            .espaco {
+                margin-left: 15px;
+            }
+
         </style>
     </head>
     <body>
-        <section> 
-            <h1>Distribuidoura de Gás</h1>
-            <div class="left">
-                <h4>Cliente mensal</h4>
-            <form action="Login.jsp" method="post">
-                Login: <input type="text" name="cpf" placeholder="CPF"><br>
-                Senha: <input type="password" name="codigo" placeholder="Código de usúario"><br>
-                <input type="submit" value="Logar mensal">
-<!--                <a href="Cadastro.jsp">Cadastro Mensal |</a>
-                <a href="CadastroClienteComum.jsp">Cadastro Comum |</a>
-                <a href="Esqueceu.jsp">Esqueceu sua senha?</a>-->
-            </form>  
+        <section id="caixa"> 
+            <h2 class="titulo">Distribuidora de Gás</h2>
+            <hr>
+            <div id="cliente_mensal">
+                <h4>Mensalista</h4>
+                <form action="Login.jsp" method="post">
+                    <strong>Login:</strong> <input type="text" name="cpf" placeholder="CPF" class="input espaco"><br><br>
+                    <strong>Senha:</strong> <input type="password" name="codigo" placeholder="Código de usúario" class="input"><br><br>
+                    <div id="botao_mensal">
+                        <input type="submit" value="Logar mensal" class="botaoEnviar">
+                    </div>
+                </form>
             </div>
-            <div class="right">
-                <h4>Cliente comum</h4>
+            <div id="cliente_comum">
+                <h4>Avulso</h4>
                 <form action="Login_comum.jsp" method="post">
-                Login: <input type="text" name="email" placeholder="exempo@email.com"><br>
-                Senha: <input type="password" name="senha" placeholder="senha"><br>
-                <input type="submit" value="Logar comum">
-                
-            </form>  
+                    <strong>Login:</strong> <input type="text" name="email" placeholder="exempo@email.com" class="input espaco"><br><br>
+                    <strong>Senha:</strong> <input type="password" name="senha" placeholder="Senha" class="input"><br><br>
+                    <div id="botao_comum">
+                        <input type="submit" value="Logar comum" class="botaoEnviar">
+                    </div>
+                </form>
             </div>
-            <br><a href="Cadastro.jsp">Cadastro Mensal |</a>
-            <a href="CadastroClienteComum.jsp">Cadastro Comum |</a>
+            <br><br><br>
+            <a href="CadastroClienteComum.jsp">Cadastro</a>
             <a href="Esqueceu.jsp">Esqueceu sua senha?</a>
         </section>
     </body>
