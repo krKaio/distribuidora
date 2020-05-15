@@ -130,7 +130,8 @@
             <h2 class="titulo">Distribuidora de Gás</h2>
             <hr>
             <div class="left">
-                <%                    request.setCharacterEncoding("UTF-8");
+                <%                   
+                    request.setCharacterEncoding("UTF-8");
                     response.setCharacterEncoding("UTF-8");
 
                     String cpf = (String) session.getAttribute("cpf");
