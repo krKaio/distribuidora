@@ -123,6 +123,11 @@
                 width: 50px;
                 height: 60px;
             }
+            .txt {
+                border-radius: 5px;
+                border: 1px solid #DEB887;
+                height: 20px; 
+            }
         </style>
     </head>
     <body>
@@ -155,11 +160,11 @@
             </div>
             <nav>
                 <a class="btn" href="Home.jsp">Home</a>
-                <a class="btn" href="mailJSP.jsp">Enviar Boletos</a>
+                <a class="btn" href="SegundaVia.jsp">2° Via Boletos</a>
                 <a class="btn" href="Pagar.jsp">Boletos</a>
                 <a class="btn" href="MeuPagamento.jsp">Meus Pagamentos </a>
                 <a class="btn" href="Cadastro.jsp">Se tornar mensalista</a>
-                <a class="btn" href="Perfil.jsp">Minha conta</a>
+                <a class="btn" href="Redirecionamentos.jsp">Minha conta</a>
             </nav>
             <hr>
             <div class="btj">
@@ -168,7 +173,7 @@
                 <form action="Venda.jsp" method="post">
                     <b>Valor: R$ 70.00</b>
                     <option value="quantidade">escolha a quantidade</option>
-                    <input name="qtd" type="text" placeholder="quantdade">
+                    <input class="txt" name="qtd" type="text" placeholder="quantdade">
 
                     <input type="submit" value="Compra" class="botaoEnviar">
                 </form>

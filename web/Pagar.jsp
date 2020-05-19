@@ -150,11 +150,11 @@
             </div>
             <nav>
                 <a class="btn" href="Home.jsp">Home</a>
-                <a class="btn" href="mailJSP.jsp">Enviar Boletos</a>
+                <a class="btn" href="SegundaVia.jsp">2° Via Boletos</a>
                 <a class="btn" href="Pagar.jsp">Boletos</a>
                 <a class="btn" href="MeuPagamento.jsp">Meus Pagamentos </a>
                 <a class="btn" href="Cadastro.jsp">Se tornar mensalista</a>
-                <a class="btn" href="Perfil.jsp">Minha conta</a>
+                <a class="btn" href="Redirecionamentos.jsp">Minha conta</a>
             </nav>
             <hr>
 
@@ -171,15 +171,15 @@
                     pstmt.setString(1, cpf);
                     pstmt.setString(2, pg);
                     rs = pstmt.executeQuery();
-                    if (rs.next() == true) {
+                    if (rs.isBeforeFirst()) {
             %>
 
                 <table id="tabe">
                     <tr>
                         <th width="200"><strong>Cpf</strong></th>
                         <th width="200"><strong>nome</strong></th>
-                        <th width="200"><strong>quantidade</strong></th>
                         <th width="200"><strong>descrisção</strong></th>
+                        <th width="200"><strong>quantidade</strong></th>
                         <th width="80"><strong>valor</strong></th>
                         <th width="80"><strong>total</strong></th>
                         <th width="100"><strong>Data</strong></th>
@@ -191,8 +191,8 @@
                             String pago = rs.getString("pago");
                             String v_nome = rs.getString("nome");
                             String v_cpf = rs.getString("cpf");
-                            int qtd = rs.getInt("qtd");
                             String desc = rs.getString("descricao");
+                            int qtd = rs.getInt("qtd");
                             float valor = rs.getFloat("valor");
                             float total = rs.getFloat("total");
                             String dt = rs.getString("dt_venda");
@@ -204,8 +204,8 @@
                         <td><%= v_nome%></td>
                         <td><%= desc%></td>
                         <td><%= qtd%></td>
-                        <td><%= valor%></td>
-                        <td><%= total%></td>
+                        <td>R$ <%= valor%></td>
+                        <td>R$ <%= total%></td>
                         <td><%= dt%></td>
                         <td><%= pago%></td>
                         <td><a href="Pagando.jsp?id=<%= rs.getString("id_venda")%>"><input type="button" name="pagar" value="PAGAR" class="botaoEnviar"></a></td>

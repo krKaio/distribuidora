@@ -220,11 +220,11 @@
                     <li>DIGITE SUAS INFORMAÇÕES</li>
                 </ul>
                 <div id="cliente">
-                    <span>Nome:</span> <input type="text" name="nome" placeholder="Nome" style="width: 50%; margin-left: 25px"><br><br>
-                    <span>CPF:</span> <input type="text" name="cpf" placeholder="CPF" style="width: 50%; margin-left: 35px"><br><br>
-                    <span>Email:</span> <input type="text" name="email" placeholder="E-mail" style="width: 50%; margin-left: 25px"><br><br>
-                    <span>Senha:</span> <input type="text" name="senha" placeholder="Senha" style="margin-left: 20px"><br><br>
-                    <span>Telefone:</span> <input type="text" name="telefone" placeholder="Telefone" style="margin-left: 5px"><br><br>
+                    <span>Nome:</span> <input type="text" id="nome" name="nome" placeholder="Nome" style="width: 50%; margin-left: 25px"><br><br>
+                    <span>CPF:</span> <input type="text" id="cpf" name="cpf" placeholder="CPF" style="width: 50%; margin-left: 35px"><br><br>
+                    <span>Email:</span> <input type="text" id="email" name="email" placeholder="E-mail" style="width: 50%; margin-left: 25px"><br><br>
+                    <span>Senha:</span> <input type="password" id="senha" name="senha" placeholder="Senha" style="margin-left: 20px"><br><br>
+                    <span>Telefone:</span> <input type="text" id="telefone" name="telefone" placeholder="Telefone" style="margin-left: 5px"><br><br>
                 </div>
                 <ul>
                     <li>DIGITE SEU ENDEREÇO DE ENTREGA</li>
@@ -236,7 +236,7 @@
                     <span>Cidade:</span> <input type="text" id="city" name="city" placeholder="Cidade" style="margin-left: 55px; width: 50%"><br><br>
                     <span>UF:</span> <input type="text" id="uf" name="uf" placeholder="UF" style=" margin-left: 88px; width: 5%"><br><br>
                     <span>Número:</span> <input type="text" id="num" name="num" placeholder="Número da residência"style="margin-left: 50px; width: 16%"><br><br>
-                    <span>Complemento:</span> <input type="text" name="complemento" placeholder="Complemento" style="margin-left: 3px; width: 50%"><br><br>
+                    <span>Complemento:</span> <input type="text" id="complemento" name="complemento" placeholder="Complemento" style="margin-left: 3px; width: 50%"><br><br>
                 </div>
                 <input class="botaoEnviar" type="submit" onClick="return validar();" value="Cadastrar" >
             </form>

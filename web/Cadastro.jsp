@@ -153,58 +153,7 @@
             });
         });
         </script>
-<!--        <script type="text/javascript" >
-        
-            // Codigo JavaScript para validar campos do form
-            function validar(){
-               
-                //codigo para validar Nome
-                var semNome = document.meuForm.nome.value;
-                if(semNome == ""){
-                    alert("Digite um nome");
-                    document.meuForm.nome.focus();
-                    return false;
-                }
-                
-                //codigo para validar email
-                var semEmail = document.meuForm.email.value;
-                if(semEmail == ""){
-                    alert("Digite um email");
-                    document.meuForm.email.focus();
-                    return false;
-                }
-                
-                //codigo para validar Senha
-                var semSenha = document.meuForm.senha.value;
-                if(semSenha == ""){
-                    alert("Digite uma senha");
-                    document.meuForm.senha.focus();
-                    return false;
-                }
-                
-                //codigo para validar CEP
-                var semCEP = document.meuForm.cep.value;
-                if(semCEP == ""){
-                    alert("Digite um CEP");
-                    document.meuForm.cep.focus();
-                    return false;
-                }
-                
-                 //codigo para validar CEP
-                var semNum = document.meuForm.num.value;
-                if(semNum == ""){
-                    alert("Digite um numero da residência");
-                    document.meuForm.num.focus();
-                    return false;
-                }
-                var semCpf = document.meuForm.cpf.value;
-                if(semCpf == ""){
-                    alert("Digite um cpf");
-                    document.meuForm.cpf.focus();
-                    return false;
-                }
-            }  
-        </script>-->
+
     
     </head>
     <body>
@@ -217,22 +166,22 @@
                     <li>DIGITE SUAS INFORMAÇÕES</li>
                 </ul>
                 <div id="cliente">
-                    <span>Nome:</span> <input type="text" name="name" placeholder="Nome" style="width: 50%; margin-left: 25px"><br><br>
-                    <span>CPF:</span> <input type="text" name="cpf" placeholder="CPF" style="width: 50%; margin-left: 35px"><br><br>
-                    <span>Email:</span> <input type="text" name="email" placeholder="E-mail" style="width: 50%; margin-left: 25px"><br><br>
-                    <span>Telefone:</span> <input type="text" name="telefone" placeholder="Telefone" style="margin-left: 5px"><br><br>
-                    <span>Idade:</span> <input type="text" name="idade" placeholder="Idade" style="width: 10%; margin-left: 29px"><br><br>
+                    <span>Nome:</span> <input type="text" id="nome" name="nome" placeholder="Nome" style="width: 50%; margin-left: 23px" required><br><br>
+                    <span>CPF:</span> <input type="text" id="cpf" name="cpf" placeholder="CPF" style="width: 50%; margin-left: 35px"required><br><br>
+                    <span>Email:</span> <input type="text" id="email" name="email" placeholder="E-mail" style="width: 50%; margin-left: 25px"required><br><br>
+                    <span>Telefone:</span> <input type="text" id="telefone" name="telefone" placeholder="Telefone" style="margin-left: 5px"required><br><br>
+                    <span>Idade:</span> <input type="text" id="idade" name="idade" placeholder="Idade" style="width: 10%; margin-left: 29px"required><br><br>
                 </div>
                 <ul>
                     <li>DIGITE SEU ENDEREÇO DE ENTREGA</li>
                 </ul>
                 <div id="endereco">
-                    <span>CEP:</span> <input type="text" id="cep" name="cep" placeholder="CEP" style="margin-left: 73px"><br><br>
-                    <span>Logradouro:</span> <input type="text" id="log" name="log" placeholder="Logradouro" style="margin-left: 17px; width: 50%"><br><br>
-                    <span>Bairro:</span> <input type="text" id="bairro" name="bairro" placeholder="Bairro" style="margin-left: 60px; width: 50%"><br><br>
-                    <span>Cidade:</span> <input type="text" id="city" name="city" placeholder="Cidade" style="margin-left: 55px; width: 50%"><br><br>
-                    <span>UF:</span> <input type="text" id="uf" name="uf" placeholder="UF" style=" margin-left: 88px; width: 5%"><br><br>
-                    <span>Número:</span> <input type="text" id="num" name="num" placeholder="Número da residência"style="margin-left: 50px; width: 16%"><br><br>
+                    <span>CEP:</span> <input type="text" id="cep" name="cep" placeholder="CEP" style="margin-left: 73px"required><br><br>
+                    <span>Logradouro:</span> <input type="text" id="log" name="log" placeholder="Logradouro" style="margin-left: 17px; width: 50%"required><br><br>
+                    <span>Bairro:</span> <input type="text" id="bairro" name="bairro" placeholder="Bairro" style="margin-left: 60px; width: 50%"required><br><br>
+                    <span>Cidade:</span> <input type="text" id="city" name="city" placeholder="Cidade" style="margin-left: 55px; width: 50%"required><br><br>
+                    <span>UF:</span> <input type="text" id="uf" name="uf" placeholder="UF" style=" margin-left: 88px; width: 5%"required><br><br>
+                    <span>Número:</span> <input type="text" id="num" name="num" placeholder="Número da residência"style="margin-left: 50px; width: 16%"required><br><br>
                     <span>Complemento:</span> <input type="text" name="complemento" placeholder="Complemento" style="margin-left: 3px; width: 50%"><br><br>
                 </div>
                 <input type="submit" onClick="return validar();" value="Cadastrar" class="botaoEnviar">

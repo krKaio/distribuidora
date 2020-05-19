@@ -121,6 +121,11 @@
             .id{
                 display: none;
             }
+            .txt {
+                border-radius: 5px;
+                border: 1px solid #DEB887;
+                height: 20px; 
+            }
         </style>
 
     </head>
@@ -151,11 +156,11 @@
             </div>
             <nav>
                 <a class="btn" href="Home.jsp">Home</a>
-                <a class="btn" href="mailJSP.jsp">Enviar Boletos</a>
+                <a class="btn" href="SegundaVia.jsp">2° Via Boletos</a>
                 <a class="btn" href="Pagar.jsp">Boletos</a>
                 <a class="btn" href="MeuPagamento.jsp">Meus Pagamentos </a>
                 <a class="btn" href="Cadastro.jsp">Se tornar mensalista</a>
-                <a class="btn" href="Perfil.jsp">Minha conta</a>
+                <a class="btn" href="Redirecionamentos.jsp">Minha conta</a>
             </nav>
             <hr>
 
@@ -172,9 +177,8 @@
                     while (rs.next()) {
             %>
             <form action="Pago.jsp" method="post">
-                Valor a pagar: <%=rs.getString("total")%><br>
-                Informe o valor: <input type="text" name="vl" placeholder=<%=rs.getString("total")%>>
-
+                <strong>Valor a pagar: R$ <%=rs.getString("total")%></strong><br>
+                <strong> Informe o valor: R$ </strong> <input class="txt" type="text" name="vl" placeholder="<%=rs.getString("total")%>">
                 <input type="submit" name="pagando"  value="PAGAR" class="botaoEnviar">
                 <input class="id" type="text" name="id" value="<%=rs.getString("id_venda")%>">
 

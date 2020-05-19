@@ -17,6 +17,7 @@
 <%@page import="java.security.SecureRandom"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*" language="java"%>
 <%@include file="conecta.jsp" %>
+<jsp:useBean id="men" class="meuBeans.ClienteMensal" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,164 +43,173 @@
             String nome, email, logadouro, telefone, cidade, uf, bairro, complemento;
 
             cpf = request.getParameter("cpf");
-            nome = request.getParameter("name");
-            email = request.getParameter("email");
-            logadouro = request.getParameter("log");
-            cep = request.getParameter("cep");
-            cidade = request.getParameter("city");
-            uf = request.getParameter("uf");
-            bairro = request.getParameter("bairro");
-            complemento = request.getParameter("complemento");
-            telefone = request.getParameter("telefone");
-            String numero = request.getParameter("num");
-            String ida = request.getParameter("idade");
 
             //verificação se os campos estão vazios
-            if (nome.isEmpty()) {
-                out.print("<script>alert('Preencha campo nome.');"
-                        + "history.go(-1); document.meuForm.nome.focus();</script>");
-            } else if (cpf.isEmpty()) {
-                out.print("<script>alert('Preencha campo cpf.');"
-                        + "document.meuForm.cpf.focus();history.go(-1);</script>");
-            } else if (email.isEmpty()) {
-                out.print("<script>alert('Preencha campo email.');"
-                        + "history.go(-1);document.meuForm.email.focus();</script>");
-            } else if (telefone.isEmpty()) {
-                out.print("<script>alert('Preencha campo telefone.');"
-                        + "history.go(-1);</script>");
-            } else if (ida.isEmpty()) {
-                out.print("<script>alert('Preencha campo idade.');"
-                        + "history.go(-1);document.meuForm.idade.focus();</script>");
-            } else if (cep.isEmpty()) {
-                out.print("<script>alert('Preencha campo cep.');"
-                        + "history.go(-1);</script>");
-            } else if (numero.isEmpty()) {
-                out.print("<script>alert('Preencha campo número.');"
-                        + "history.go(-1);document.meuForm.num.focus();</script>");
-            } else {
-                //vereficando disponibilidade de endereço para serviço mensal
-                try {
-                    int idade = Integer.parseInt(request.getParameter("idade"));
-                    int num = Integer.parseInt(request.getParameter("num"));
+        %>
+        <jsp:setProperty name="men" property="cpf" value="${param.cpf}" />
+        <jsp:setProperty name="men" property="nome" value="${param.nome}" />
+        <jsp:setProperty name="men" property="email" value="${param.email}" />
+        <jsp:setProperty name="men" property="idade" value="${param.idade}" />
+        <jsp:setProperty name="men" property="telefone" value="${param.telefone}" />
+        <jsp:setProperty name="men" property="cep" value="${param.cep}" />
+        <jsp:setProperty name="men" property="logradouro" value="${param.log}" />
+        <jsp:setProperty name="men" property="bairro" value="${param.bairro}" />
+        <jsp:setProperty name="men" property="cidade" value="${param.city}" />
+        <jsp:setProperty name="men" property="uf" value="${param.uf}" />
+        <jsp:setProperty name="men" property="numero" value="${param.num}" />
+        <jsp:setProperty name="men" property="complemento" value="${param.complemento}" />
+        <%                //vereficando disponibilidade de endereço para serviço mensal
+            int num = Integer.parseInt(request.getParameter("num"));
+            rs = men.consultar("SELECT * FROM client WHERE cep = '" + cep + "'");
 
-                    String sql = "SELECT * FROM client WHERE cep = ?";
-                    pstmt = con.prepareStatement(sql);
-                    pstmt.setString(1, cep);
-                    rs = pstmt.executeQuery();
-                    if (rs.next() != false) {
-                        if (cep.equals(rs.getString("cep")) && num == Integer.parseInt(rs.getString("numero"))) {
-                            out.println("<h3>Desculpe, mas já tem um serviço mensal cadastrdo no endereço informado!</h3>");
-                        } else {
-                            // usando os metodos isCPF() e imprimeCPF() da classe "ValidaCPF"
-                            if (ValidaCPF.isCPF(cpf) == true) {
-                                SecureRandom random = new SecureRandom();
-                                String token = new BigInteger(40, random).toString(32);
-                                String codigo = token;
-                                /**/
+            if (!rs.isBeforeFirst()) {
+                if (ValidaCPF.isCPF(cpf) == true) {
 
-                                try {
+                    String resp = men.incluir();
+                    if (resp.equals("ok")) {
+                        //envia um e-mail de bem vindo
+                        results = men.consultar("SELECT * FROM client WHERE cpf = '" + cpf + "'");
+                        while (results.next()) {
+                            out.println("Dados gravados com sucesso");
+                            out.println("seu código de usuário é: " + "<h3>" + results.getString("codigo") + "</h3>");
+                            out.println("<p>Agora o seu login será a partir do cpf e código de usuario! </p>");
 
-                                    String query = "INSERT INTO client (cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                                    //  String query = "INSERT INTO client (cpf, nome, email, idade, telefone, logadouro, numero, cep, bairro, cidade, uf, complemento, codigo ) VALUES (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)";
-                                    pstmt = con.prepareStatement(query);
-                                    pstmt.setString(1, cpf);
-                                    pstmt.setString(2, nome);
-                                    pstmt.setString(3, email);
-                                    pstmt.setInt(4, idade);
-                                    pstmt.setString(5, telefone);
-                                    pstmt.setString(6, logadouro);
-                                    pstmt.setInt(7, num);
-                                    pstmt.setString(8, cep);
-                                    pstmt.setString(9, bairro);
-                                    pstmt.setString(10, cidade);
-                                    pstmt.setString(11, uf);
-                                    pstmt.setString(12, complemento);
-                                    pstmt.setString(13, codigo);
+                            String result;
+                            final String to = request.getParameter("email");
+                            final String from = "shuruprojetos@gmail.com";
+                            final String pass = "shuruminos";
 
-                                    int executa = pstmt.executeUpdate();
-                                    if (executa > 0) {
-                                        //envia um e-mail de bem vindo
-                                        out.println("Dados gravados com sucesso");
-                                        out.println("seu código de usuário é: " + "<h3>" + codigo + "</h3>");
-                                        out.println("<p>Agora o seu login será a partir do cpf e código de usuario! </p>");
-                                        String cod = rs.getString("codigo");
-                                        String result;
-                                        final String to = request.getParameter("email");
-                                        final String from = "shuruprojetos@gmail.com";
-                                        final String pass = "shuruminos";
+                            String host = "smtp.gmail.com";
+                            Properties props = new Properties();
 
-                                        String host = "smtp.gmail.com";
-                                        Properties props = new Properties();
+                            props.put("mail.smtp.port", 587);
+                            props.put("mail.smtp.host", host);
+                            props.put("mail.transport.protocol", "smtp");
+                            props.put("mail.smtp.auth", "true");
+                            props.put("mail.smtp.starttls.enable", "true");
+                            props.put("mail.user", from);
+                            props.put("mail.password", pass);
 
-                                        props.put("mail.smtp.port", 587);
-                                        props.put("mail.smtp.host", host);
-                                        props.put("mail.transport.protocol", "smtp");
-                                        props.put("mail.smtp.auth", "true");
-                                        props.put("mail.smtp.starttls.enable", "true");
-                                        props.put("mail.user", from);
-                                        props.put("mail.password", pass);
-
-                                        Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
-                                            @Override
-                                            protected PasswordAuthentication getPasswordAuthentication() {
-                                                return new PasswordAuthentication(from, pass);
-                                            }
-                                        });
-
-                                        try {
-                                            MimeMessage message = new MimeMessage(mailSession);
-                                            message.setFrom(new InternetAddress(from));
-                                            message.addRecipient(Message.RecipientType.TO,
-                                                    new InternetAddress(to));
-                                            // Set Subject: header field
-                                            message.setSubject("Mensalista");
-                                            // Now set the actual message
-                                            message.setText("Obigado por se tornar um mensalista!\n"
-                                                    + "Como um mensalista o meio de entrar no sistema será diferente, a partir de agora será pelo meio de autenticação do mensalista. "
-                                                    + "\nVocê utilizará o seu CPF e o seguinte código para entrar: " + codigo);
-                                            // Send message
-                                            Transport.send(message);
-                                            result = "Enviamos para você com o seu código de usuário!";
-                                            out.println(result);
-                                        } catch (MessagingException mex) {
-                                            mex.printStackTrace();
-                                            result = "Error: unable to send mail....\n" + mex;
-                                            out.println(result);
-                                        }
-
-                                    } else {
-                                        out.print("<script>alert('Erro ao gravar os dados');"
-                                                + "history.go(-1);</script>");
-                                    }
-                                } catch (Exception e) {
-                                    out.println("<p>Algo errado com o banco de dados </p>" + e.getMessage());
+                            Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+                                @Override
+                                protected PasswordAuthentication getPasswordAuthentication() {
+                                    return new PasswordAuthentication(from, pass);
                                 }
-                            } else {
-                                out.print("<script>alert('CPF informando não é valido.');"
-                                        + "history.go(-1);</script>");
+                            });
+
+                            try {
+                                MimeMessage message = new MimeMessage(mailSession);
+                                message.setFrom(new InternetAddress(from));
+                                message.addRecipient(Message.RecipientType.TO,
+                                        new InternetAddress(to));
+                                // Set Subject: header field
+                                message.setSubject("Mensalista");
+                                // Now set the actual message
+                                message.setText("Obigado por se tornar um mensalista!\n"
+                                        + "Como um mensalista o meio de entrar no sistema será diferente, a partir de agora será pelo meio de autenticação do mensalista. "
+                                        + "\nVocê utilizará o seu CPF e o seguinte código para entrar: " + results.getString("codigo"));
+                                // Send message
+                                Transport.send(message);
+                                result = "Enviamos para você com o seu código de usuário!";
+                                out.println(result);
+                            } catch (MessagingException mex) {
+                                mex.printStackTrace();
+                                result = "Error: unable to send mail....\n" + mex;
+                                out.println(result);
                             }
                         }
                     } else {
-                        response.sendRedirect("Home.jsp");
+                        out.println(resp);
+//                        out.print("<script>alert('Erro ao gravar os dados');"
+//                                + "history.go(-1);</script>" + resp);
                     }
-                } catch (Exception eX) {
-                    out.println("<p>Algo errado com o banco de dados  </p>" + eX.getMessage());
-                } finally {
-                    try {
-                        if (stm != null) {
-                            stm.close();
-                            stm = null;
+
+                } else {
+                    out.print("<script>alert('CPF informando não é valido.');"
+                            + "history.go(-1);</script>");
+                }
+            } else {
+                while (rs.next()) {
+                    if (cep.equals(rs.getString("cep")) && num == Integer.parseInt(rs.getString("numero"))) {
+                        out.println("<h3>Desculpe, mas já tem um serviço mensal cadastrdo no endereço informado!</h3>");
+                        // usando os metodos isCPF() e imprimeCPF() da classe "ValidaCPF"
+
+                    } else {
+                        if (ValidaCPF.isCPF(cpf) == true) {
+                            SecureRandom random = new SecureRandom();
+                            String token = new BigInteger(40, random).toString(32);
+                            String codigo = token;
+                            /**/
+
+                            String resul = men.incluir();
+                            if (resul.equals("ok")) {
+                                //envia um e-mail de bem vindo
+                                ResultSet res = men.consultar("SELECT * FROM client WHERE cpf = '" + cpf + "'");
+                                while (res.next()) {
+                                    out.println("Dados gravados com sucesso");
+                                    out.println("seu código de usuário é: " + "<h3>" + res.getString("codigo") + "</h3>");
+                                    out.println("<p>Agora o seu login será a partir do cpf e código de usuario! </p>");
+
+                                    String result;
+                                    final String to = request.getParameter("email");
+                                    final String from = "shuruprojetos@gmail.com";
+                                    final String pass = "shuruminos";
+
+                                    String host = "smtp.gmail.com";
+                                    Properties props = new Properties();
+
+                                    props.put("mail.smtp.port", 587);
+                                    props.put("mail.smtp.host", host);
+                                    props.put("mail.transport.protocol", "smtp");
+                                    props.put("mail.smtp.auth", "true");
+                                    props.put("mail.smtp.starttls.enable", "true");
+                                    props.put("mail.user", from);
+                                    props.put("mail.password", pass);
+
+                                    Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+                                        @Override
+                                        protected PasswordAuthentication getPasswordAuthentication() {
+                                            return new PasswordAuthentication(from, pass);
+                                        }
+                                    });
+
+                                    try {
+                                        MimeMessage message = new MimeMessage(mailSession);
+                                        message.setFrom(new InternetAddress(from));
+                                        message.addRecipient(Message.RecipientType.TO,
+                                                new InternetAddress(to));
+                                        // Set Subject: header field
+                                        message.setSubject("Mensalista");
+                                        // Now set the actual message
+                                        message.setText("Obigado por se tornar um mensalista!\n"
+                                                + "Como um mensalista o meio de entrar no sistema será diferente, a partir de agora será pelo meio de autenticação do mensalista. "
+                                                + "\nVocê utilizará o seu CPF e o seguinte código para entrar: " + res.getString("codigo"));
+                                        // Send message
+                                        Transport.send(message);
+                                        result = "Enviamos para você com o seu código de usuário!";
+                                        out.println(result);
+                                    } catch (MessagingException mex) {
+                                        mex.printStackTrace();
+                                        result = "Error: unable to send mail....\n" + mex;
+                                        out.println(result);
+                                    }
+                                }
+
+                            } else {
+                                out.println("Erro ao gravar" + resul);
+//                                out.print("<script>alert('Erro ao gravar os dados');"
+//                                        + "history.go(-1);</script>" + resul);
+                            }
+
+                        } else {
+                            out.print("<script>alert('CPF informando não é valido.');"
+                                    + "history.go(-1);</script>");
                         }
-                        if (con != null) {
-                            con.close();
-                            con = null;
-                        }
-                    } catch (Exception e1) {
-                        out.println("<h3>" + e1 + "</h3>");
                     }
                 }
-
             }
+
+
         %>
         <form action="Home.jsp" method="post">
 

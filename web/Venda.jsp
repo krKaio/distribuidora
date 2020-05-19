@@ -155,11 +155,11 @@
             </div>
             <nav>
                 <a class="btn" href="Home.jsp">Home</a>
-                <a class="btn" href="mailJSP.jsp">Enviar Boletos</a>
+                <a class="btn" href="SegundaVia.jsp">2° Via Boletos</a>
                 <a class="btn" href="Pagar.jsp">Boletos</a>
                 <a class="btn" href="MeuPagamento.jsp">Meus Pagamentos </a>
                 <a class="btn" href="Cadastro.jsp">Se tornar mensalista</a>
-                <a class="btn" href="Perfil.jsp">Minha conta</a>
+                <a class="btn" href="Redirecionamentos.jsp">Minha conta</a>
             </nav>
             <hr>
 
