@@ -339,16 +339,16 @@
                     <span>Cidade:</span> <input type="text" id="city" name="city" value='<%=results.getString("cidade")%>'style="margin-left: 50px; width: 50%"required><br><br>
                     <span>UF:</span> <input type="text" id="uf" name="uf" value='<%=results.getString("uf")%>'style=" margin-left: 76px; width: 5%" required><br><br>
                     <span>Numero:</span> <input type="number" id="num" name="num" value='<%=results.getInt("numero")%>'style="margin-left: 42px; width: 16%" required><br><br>
-                    <span>Complemento:</span> <input type="text" id="complemento" name="complemento" value='<%=results.getString("complemento")%>' style="margin-left: 1px; width: 50%" required><br><br>
+                    <span>Complemento:</span> <input type="text" id="complemento" name="complemento" value='<%=results.getString("complemento")%>' style="margin-left: 1px; width: 50%"><br><br>
                 </div>
                 <%
                     }
                 %>
                 <input type="submit" onClick="return validarCampos();" value="Alterar Dados" class="botaoEnviar">
             </form>
-            <form>
+           
                 <a href="ApagarContaComum.jsp" class="apagar" ><input type="submit" name="apagar" value="Apagar Conta" class="botaoApagar"></a>
-            </form>
+          
 
         </section>
     </body>

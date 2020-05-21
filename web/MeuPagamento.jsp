@@ -160,16 +160,15 @@
 
             <div id="conterner">
 
-                <strong>MEUS PAGAMENTO</strong>
+                <strong>MEUS PAGAMENTOS</strong>
             <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
                 String sql;
                 String pg = "sim";
 
                 try {
-                    sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
+                    sql = "SELECT * FROM venda WHERE cpf = ? ";
                     pstmt = con.prepareStatement(sql);
                     pstmt.setString(1, cpf);
-                    pstmt.setString(2, pg);
                     rs = pstmt.executeQuery();
                     if (rs.isBeforeFirst()) {
             %>
@@ -195,7 +194,7 @@
                             float valor = rs.getFloat("valor");
                             float total = rs.getFloat("total");
                             String dt = rs.getString("dt_venda");
-                            if (pago.equals("sim")) {
+                            
 
                     %>
                     <tr>            
@@ -209,7 +208,7 @@
                         <td><%= pago%></td>
                     </tr>
                     <%
-                            }
+                            
                         }
                         rs.close();
                         stm.close();

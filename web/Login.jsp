@@ -5,7 +5,7 @@
     String codigo = request.getParameter("codigo");
     String sql, nome;
 
-    if (!cpf.isEmpty() && !codigo.isEmpty()) {
+    
         try {
 
             sql = "SELECT cpf, nome, codigo, email FROM client WHERE cpf = '" + cpf + "'";
@@ -34,8 +34,5 @@
         } catch (SQLException el) {
             out.println(el);
         }
-    } else {
-        out.print("<script>alert('Os campos de login estão vazios ou um dos campos esta vazio!');"
-                + "history.go(-1);</script>");
-    }
+    
 %>

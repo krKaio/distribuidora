@@ -1,3 +1,5 @@
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
@@ -140,6 +142,20 @@
                     } else {
                         out.println("Bem vindo, " + nome + "<br>");
                     }
+                    String ql;
+                    String pag = "sim";
+
+                    
+
+                    Date data2 = new Date(); 
+                    Calendar c = new GregorianCalendar(); 
+                    c.setTime(data2); 
+                    int dia = c.get(Calendar.DAY_OF_MONTH);
+                    int ms = c.get(Calendar.MONTH) +1; 
+                    int ano = c.get(Calendar.YEAR);
+                    
+                    
+
 
                 %>
             </div>
@@ -147,6 +163,8 @@
                 <a href="Deslogar.jsp">
                     <img src="imagens/deslogar.png" class="des">
                 </a>
+                <br>
+                <%=dia+"/"+ms+"/"+ano%>
             </div>
             <nav>
                 <a class="btn" href="Home.jsp">Home</a>
@@ -161,18 +179,18 @@
             <div id="conterner">
 
                 <strong>BOLETOS EM ABERTOS</strong>
-            <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
-                String sql;
-                String pg = "nao";
+                <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
+                    String sql;
+                    String pg = "nao";
 
-                try {
-                    sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
-                    pstmt = con.prepareStatement(sql);
-                    pstmt.setString(1, cpf);
-                    pstmt.setString(2, pg);
-                    rs = pstmt.executeQuery();
-                    if (rs.isBeforeFirst()) {
-            %>
+                    try {
+                        sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
+                        pstmt = con.prepareStatement(sql);
+                        pstmt.setString(1, cpf);
+                        pstmt.setString(2, pg);
+                        rs = pstmt.executeQuery();
+                        if (rs.isBeforeFirst()) {
+                %>
 
                 <table id="tabe">
                     <tr>

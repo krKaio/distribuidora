@@ -57,7 +57,7 @@
                     Transport.send(message);
                     result = "Your mail sent successfully....";
                     out.println(result);
-                    out.print("<script>alert('Sua senha é: " + senha + ".Também envamos a sua para o e-mail informado.');"
+                    out.print("<script>alert('Sua senha é: " + senha + ".Também enviamos a sua para o e-mail informado.');"
                             + "history.go(-2);</script>");
                 } catch (MessagingException mex) {
                     mex.printStackTrace();

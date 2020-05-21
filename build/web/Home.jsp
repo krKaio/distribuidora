@@ -173,7 +173,7 @@
                 <form action="Venda.jsp" method="post">
                     <b>Valor: R$ 70.00</b>
                     <option value="quantidade">escolha a quantidade</option>
-                    <input class="txt" name="qtd" type="text" placeholder="quantdade">
+                    <input class="txt" name="qtd" type="text" placeholder="Quantdade" required>
 
                     <input type="submit" value="Compra" class="botaoEnviar">
                 </form>

@@ -160,7 +160,7 @@
 
             <div id="conterner">
 
-                <strong>Segunda via de boleto</strong>
+                <strong>SEGUNDA VIA DE BOLETO</strong>
             <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
                 String sql;
                 String pg = "nao";

@@ -215,14 +215,12 @@
 
                                         int executa = pstmt.executeUpdate();
                                         if (executa > 0) {
-                                            //atualiza a quantidade do estoque
-    //                                String sql = "UPDATE estoque SET qntd_estoque = qntd_estoque - " + qtd + " WHERE modelo = 'botijao'";
-    //                                pstmt.executeUpdate(sql);
+                                            
                                             out.println("<h1> " + nome + " o total da sua compra é de R$" + total + " feita no dia " + srtDateb.format(d) + "</h1>");
                                             out.println("Pagamento pendente");
 
                                         } else {
-                                            out.println("Não foi possivel realizar a compra.");
+                                            out.println("Não foi possivel realizar a pedido.");
                                         }
                                     } catch (Exception e) {
                                         out.println("<h1>" + e + "</h1>");

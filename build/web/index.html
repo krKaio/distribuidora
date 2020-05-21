@@ -114,20 +114,20 @@
             <div id="cliente_mensal">
                 <h4>Mensalista</h4>
                 <form action="Login.jsp" method="post">
-                    <strong>Login:</strong> <input type="text" name="cpf" placeholder="CPF" class="input espaco"><br><br>
-                    <strong>Senha:</strong> <input type="password" name="codigo" placeholder="Código de usúario" class="input"><br><br>
+                    <strong>CPF:</strong> <input type="text" name="cpf" placeholder="CPF" class="input espaco" required><br><br>
+                    <strong>Código:</strong> <input type="password" name="codigo" placeholder="Código de usúario" class="input" required><br><br>
                     <div id="botao_mensal">
-                        <input type="submit" value="Logar mensal" class="botaoEnviar">
+                        <input type="submit" value="Entrar" class="botaoEnviar">
                     </div>
                 </form>
             </div>
             <div id="cliente_comum">
                 <h4>Avulso</h4>
                 <form action="Login_comum.jsp" method="post">
-                    <strong>Login:</strong> <input type="text" name="email" placeholder="exempo@email.com" class="input espaco"><br><br>
-                    <strong>Senha:</strong> <input type="password" name="senha" placeholder="Senha" class="input"><br><br>
+                    <strong>E-mail:</strong> <input type="text" name="email" placeholder="exempo@email.com" class="input espaco" required><br><br>
+                    <strong>Senha:</strong> <input type="password" name="senha" placeholder="Senha" class="input" required><br><br>
                     <div id="botao_comum">
-                        <input type="submit" value="Logar comum" class="botaoEnviar">
+                        <input type="submit" value="Entrar" class="botaoEnviar">
                     </div>
                 </form>
             </div>

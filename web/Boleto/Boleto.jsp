@@ -14,21 +14,25 @@
             
             var endereco="", saida="", cod="";
             $("#tabelaBoleto").empty(); 
-                 if(acao=="B") endereco = "BoletoGerado.jsp?NBoleto="+$("#text").val();
+                 if(acao=="B") endereco = "../Pagando.jsp?id="+$("#text").val();
+                 
                  
                 $.ajax({ 
                     url : endereco,
                     success : function(xml){
                         
-                        saida +=  "<table border='1'><tr><td>MODELO</td><td>QNTD</td><td>CÓDIGO</td><td>CPF</td><td>VALOR</td><td>DATA</td><td>PAGO</td></tr>";
-                        $(xml).find("boleto").each(function(){                            
+                        saida +=  "<table border='1'><tr><td>cpf</td><td>nome</td><td>descricao</td><td>quantidade</td><td>valor</td><td>total</td><td>data</td><td>pago</td></tr>";
+                        $(xml).find("venda").each(function(){                            
                                 saida += "<tr class='linha'><td> "+ $(this).find("modelo").text()+"</td>"; 
-                                saida += "<td>"+ $(this).find("qntd").text()+"</td>";
-                                saida += "<td>"+ $(this).find("cod").text()+"</td>";
                                 saida += "<td>"+ $(this).find("cpf").text()+"</td>";
+                                saida += "<td>"+ $(this).find("nome").text()+"</td>";
+                                saida += "<td>"+ $(this).find("cpf").text()+"</td>";
+                                saida += "<td>"+ $(this).find("descricao").text()+"</td>";
                                 saida += "<td>"+ $(this).find("valor").text()+"</td>";
-                                saida += "<td>"+ $(this).find("dt").text()+"</td>";
-                                saida += "<td>"+ $(this).find("pagou").text()+"</td>";
+                                saida += "<td>"+ $(this).find("total").text()+"</td>";
+                                saida += "<td>"+ $(this).find("dt_venda").text()+"</td>";
+                                saida += "<td>"+ $(this).find("pago").text()+"</td>";
+                                saida += "<td><a href='#' onclick='processar("+$(this).find("id_venda").text()+">Excluir</a></td></tr>"; 
                             });
                             saida += "</table>";
                             $("#tabelaBoleto").append(saida);       
@@ -114,23 +118,23 @@
                     if (usuario == null) {
                         response.sendRedirect("../Login.jsp");
                     } else {
-                        out.println("Bem vindo, " + "<input type='text' name='NBoleto' id='text' value='"+usuario+"' size='5' readonly>"
+                        out.println("Bem vindo, " + "<input type='text' name='cpf' id='text' value='"+usuario+"' size='5' readonly>"
                         + "<br>");
                     }
             %>
         </div>
         <br><br>
-        <form action='Pagamento.jsp' method='post'>
+        <form action='../Pagando.jsp' method='post'>
         <div id="tabelaBoleto"></div>
          vai puxar o cod para pagamento <select name="boleto" >
             <option value="0">Boleto A Pagar</option>
             <%
                String resp = "";
                 try{
-                    ResultSet rs = stm.executeQuery("SELECT * FROM pagamento where valor_pago=0.00 ORDER BY cod");
+                    ResultSet rs = stm.executeQuery("SELECT * FROM venda where pago= 'nao' and cpf ='"+usuario+"'");
                     while(rs.next()){
-                        resp+="<option value='"+rs.getInt("cod")+"'>";
-                        resp+=rs.getString("cod")+"</option>";
+                        resp+="<option value='"+rs.getInt("id_venda")+"'>";
+                        resp+=rs.getString("id_venda")+"</option>";
                     }
                     rs.close();
                 }catch(Exception ex){
@@ -140,7 +144,7 @@
                 con.close();                
                 out.println(resp);
             %></select>
-            <a href='Pagamento.jsp'> <input type='submit' value='PAGAR' name='pagando'></a>
+            <a href='../Pagando.jsp'> <input type='submit' value='PAGAR' name='pagando'></a>
         </form>
         
     </body>

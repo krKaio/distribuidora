@@ -168,18 +168,33 @@
                 height: 30px;
                 width: 100px;
             }
+            .botaoRenovar {
+                padding: 5px; 
+                border: 1px solid #eee;
+                border-radius: 5px;
+                background-color: #ADD8E6;
+                font-size: 15px;
+                font-weight: bold;
+                color: #000;	
+                border: 1px solid #000;
+                height: 30px;
+                width: 200px;
+                text-decoration: none;
+                display: none;
+            }
 
             .botaoApagar {
-                /* padding: 20px; */
+                padding: 5px; 
                 border: 1px solid #eee;
                 border-radius: 5px;
                 background-color: #FF0000;
-                font-size: 12px;
+                font-size: 15px;
                 font-weight: bold;
                 color: #fff;	
                 border: 1px solid #000;
                 height: 30px;
-                width: 100px;
+                width: 200px;
+                text-decoration: none;
             }
             span {
                 font-weight: bold;
@@ -200,6 +215,12 @@
             }
             form{
                 text-align: left;
+            }
+            .a{
+                text-align: center;
+                
+               
+
             }
 
         </style>
@@ -326,7 +347,7 @@
                 </ul>
                 <div id="cliente">
 
-                    
+
                     <span>Nome:</span> <input type="text" id="nome" name="nome" value='<%=results.getString("nome")%>'style="width: 50%; margin-left: 54px"required><br><br>
                     <span>CPF:</span> <input type="text" id="cpf" name="cpf" value='<%=results.getString("cpf")%>'style="width: 50%; margin-left: 63px" disabled><br><br>
                     <span>Email:</span> <input type="email" id="email" name="email" value='<%=results.getString("email")%>'style="width: 50%; margin-left: 55px" required><br><br>
@@ -339,16 +360,17 @@
                     <span>Cidade:</span> <input type="text" id="city" name="city" value='<%=results.getString("cidade")%>'style="margin-left: 50px; width: 50%"required><br><br>
                     <span>UF:</span> <input type="text" id="uf" name="uf" value='<%=results.getString("uf")%>'style=" margin-left: 76px; width: 5%" required><br><br>
                     <span>Numero:</span> <input type="number" id="num" name="num" value='<%=results.getInt("numero")%>'style="margin-left: 42px; width: 16%" required><br><br>
-                    <span>Complemento:</span> <input type="text" id="complemento" name="complemento" value='<%=results.getString("complemento")%>' style="margin-left: 1px; width: 50%" required><br><br>
+                    <span>Complemento:</span> <input type="text" id="complemento" name="complemento" value='<%=results.getString("complemento")%>' style="margin-left: 1px; width: 50%" ><br><br>
                 </div>
                 <%
                     }
                 %>
                 <input type="submit" onClick="return validarCampos();" value="Alterar Dados" class="botaoEnviar">
             </form>
-            
-                <a href="ApagarContaMensal.jsp" class="apagar" ><input type="submit" name="apagar" value="Cancelar serviço mensal" class="botaoApagar"></a>
-           
+            <div class="a">
+                <a href="ApagarContaMensal.jsp" class="botaoApagar" >Cancelar serviço mensal</a>
+                <a href="Renovar.jsp" class="botaoRenovar" >Renovar serviço mensal</a>
+            </div>
 
         </section>
     </body>

@@ -233,7 +233,7 @@
                                     + "</tr>"
                                     + "</table>"
                                     + "<br><br>"
-                                    + "<img src='https://corregofundo.mg.gov.br/wp-content/uploads/2018/03/CodigoDeBarras.jpg' style=' height: 10px; width; 70%;'>"
+                                    + "<img src='imagens/CodigoDeBarras.jpg' style=' height: 10px; width; 70%;'>"
                                     + " </div>",
                                     "text/html"
                             );

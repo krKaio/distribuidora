@@ -57,7 +57,7 @@
                     Transport.send(message);
                     result = "Your mail sent successfully....";
                     out.println(result);
-                    out.print("<script>alert('Seu código de usuário é: " + cod + ".Também envamos o seu código para o e-mail informado.');"
+                    out.print("<script>alert('Seu código de usuário é: " + cod + ".Também enviamos o seu código para o e-mail informado.');"
                             + "history.go(-2);</script>");
                 } catch (MessagingException mex) {
                     mex.printStackTrace();

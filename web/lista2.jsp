@@ -284,7 +284,7 @@ String Sql = "UPDATE venda SET dt_venda = '" + srtDate.format(d) + "' WHERE id_v
             </tr>
         </table>
         <br><br>
-    <img src="https://corregofundo.mg.gov.br/wp-content/uploads/2018/03/CodigoDeBarras.jpg">
+        <img src="imagens/CodigoDeBarras.jpg">
   </div> 
             <%
                         }
