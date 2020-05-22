@@ -52,7 +52,7 @@
                     int qtd = rs.getInt("qtd");
                     float valor = rs.getFloat("valor");
                     float total = rs.getFloat("total");
-                    String dt = rs.getString("dt_venda");
+                    String dt = rs.getString("dt_venda").substring(8,10)+"/"+rs.getString("dt_venda").substring(5,7)+"/"+rs.getString("dt_venda").substring(0,4);
                     sql = "SELECT * FROM clientecomum WHERE cpf = ?";
                     pstmt = con.prepareStatement(sql);
                     pstmt.setString(1, v_cpf);
@@ -233,7 +233,7 @@
                                     + "</tr>"
                                     + "</table>"
                                     + "<br><br>"
-                                    + "<img src='imagens/CodigoDeBarras.jpg' style=' height: 10px; width; 70%;'>"
+                                    + "<img src='http://www.guiadoscuriosos.com.br/wp-content/uploads/2019/04/58041-2.jpg' style=' height: 100px; width; 250px;'>"
                                     + " </div>",
                                     "text/html"
                             );
@@ -249,10 +249,7 @@
                                     + "window.location.href ='SegundaVia.jsp'; </script>");
                         }
                         //            response.sendRedirect("Home.jsp");
-    %>
-    <h1><center><font color="blue">Sending Mail Using JSP</font></</h1>
-    <b><center><font color="red"><% out.println(result);%></b>
-            <%
+   
                         }
                     }
                     rs.close();
@@ -281,7 +278,7 @@
                         int qtd = rs.getInt("qtd");
                         float valor = rs.getFloat("valor");
                         float total = rs.getFloat("total");
-                        String dt = rs.getString("dt_venda");
+                        String dt = rs.getString("dt_venda").substring(8,10)+"/"+rs.getString("dt_venda").substring(5,7)+"/"+rs.getString("dt_venda").substring(0,4);
                         sql = "SELECT * FROM client WHERE cpf = ?";
                         pstmt = con.prepareStatement(sql);
                         pstmt.setString(1, v_cpf);
@@ -469,7 +466,7 @@
                                         + "</tr>"
                                         + "</table>"
                                         + "<br><br>"
-                                        + "<img src='https://corregofundo.mg.gov.br/wp-content/uploads/2018/03/CodigoDeBarras.jpg' style=' height: 10px; width; 70%;'>"
+                                        + "<img src='http://www.guiadoscuriosos.com.br/wp-content/uploads/2019/04/58041-2.jpg' style=' height: 100px; width; 250px;'>"
                                         + " </div>",
                                         "text/html"
                                 );
@@ -485,10 +482,7 @@
                                         + "window.location.href ='SegundaVia.jsp'; </script>");
                             }
                             //            response.sendRedirect("Home.jsp");
-            %>
-            <h1><center><font color="blue">Sending Mail Using JSP</font></</h1>
-            <b><center><font color="red"><% out.println(result);%></b>
-                    <%
+          
                                     }
                                 }
                                 rs.close();

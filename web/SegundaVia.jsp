@@ -78,7 +78,14 @@
                 border: 1px solid #dddddd;
                 border-radius: 5px;
             }
-
+            #caixa {
+                margin: auto;
+                margin-top: 1%;
+                width: 70%;
+                border: 3px solid #000;
+                padding: 10px;
+                background-color: #F5F5F5;
+            }
             section{
                 margin: auto;
                 margin-top: 5%;
@@ -125,8 +132,9 @@
     </head>
 
     <body>
-        <section>
-            <h1>Distituidora de Gás</h1>
+        <section id="caixa"> 
+            <h2 class="titulo">Distribuidora de Gás</h2>
+            <hr>
             <div class="left">
                 <%                    request.setCharacterEncoding("UTF-8");
                     response.setCharacterEncoding("UTF-8");
@@ -161,29 +169,29 @@
             <div id="conterner">
 
                 <strong>SEGUNDA VIA DE BOLETO</strong>
-            <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
-                String sql;
-                String pg = "nao";
+                <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
+                    String sql;
+                    String pg = "nao";
 
-                try {
-                    sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
-                    pstmt = con.prepareStatement(sql);
-                    pstmt.setString(1, cpf);
-                    pstmt.setString(2, pg);
-                    rs = pstmt.executeQuery();
-                    if (rs.isBeforeFirst()) {
-            %>
+                    try {
+                        sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
+                        pstmt = con.prepareStatement(sql);
+                        pstmt.setString(1, cpf);
+                        pstmt.setString(2, pg);
+                        rs = pstmt.executeQuery();
+                        if (rs.isBeforeFirst()) {
+                %>
 
                 <table id="tabe">
                     <tr>
-                        <th width="200"><strong>Cpf</strong></th>
-                        <th width="200"><strong>nome</strong></th>
-                        <th width="200"><strong>descrisção</strong></th>
-                        <th width="200"><strong>quantidade</strong></th>
-                        <th width="80"><strong>valor</strong></th>
-                        <th width="80"><strong>total</strong></th>
-                        <th width="100"><strong>Data</strong></th>
-                        <th width="100"><strong>Pago</strong></th>
+                        <th><strong>Cpf</strong></th>
+                        <th><strong>nome</strong></th>
+                        <th><strong>descrisção</strong></th>
+                        <th><strong>quantidade</strong></th>
+                        <th><strong>valor</strong></th>
+                        <th><strong>total</strong></th>
+                        <th><strong>Data</strong></th>
+                        <th><strong>Pago</strong></th>
                     </tr>
 
                     <%
@@ -195,7 +203,7 @@
                             int qtd = rs.getInt("qtd");
                             float valor = rs.getFloat("valor");
                             float total = rs.getFloat("total");
-                            String dt = rs.getString("dt_venda");
+                            String dt = rs.getString("dt_venda").substring(8, 10) + "/" + rs.getString("dt_venda").substring(5, 7) + "/" + rs.getString("dt_venda").substring(0, 4);
                             if (pago.equals("nao")) {
 
                     %>

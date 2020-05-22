@@ -81,7 +81,14 @@
                 border: 1px solid #dddddd;
                 border-radius: 5px;
             }
-
+            #caixa {
+                margin: auto;
+                margin-top: 1%;
+                width: 70%;
+                border: 3px solid #000;
+                padding: 10px;
+                background-color: #F5F5F5;
+            }
             section{
                 margin: auto;
                 margin-top: 5%;
@@ -113,10 +120,10 @@
             .btj{
                 width: 35%;
                 margin: 20px;
-                margin-top: 50px;
+                margin-left: 13%;
                 padding: 10px;
                 border: 1px solid;
-                border-radius: 10px;
+                border-radius: 10px; 
 
             }
             .des{
@@ -128,6 +135,20 @@
                 border: 1px solid #DEB887;
                 height: 20px; 
             }
+            .gas{
+                width: 24.2%;
+                margin: 20px;
+                margin-left: 35%;
+                padding: 10px;
+                border: 1px solid;
+                border-radius: 10px;
+                position: absolute
+            }
+
+            .img{
+                width: 290px;
+                height: 421.6px;
+            }
         </style>
     </head>
     <body>
@@ -135,7 +156,7 @@
             <h2 class="titulo">Distribuidora de Gás</h2>
             <hr>
             <div class="left">
-                <%                   
+                <%
                     request.setCharacterEncoding("UTF-8");
                     response.setCharacterEncoding("UTF-8");
 
@@ -167,16 +188,23 @@
                 <a class="btn" href="Redirecionamentos.jsp">Minha conta</a>
             </nav>
             <hr>
-            <div class="btj">
-                <b>Compre seu botijão de gás</b><br>
-                <img src="imagens/botijao.png">
-                <form action="Venda.jsp" method="post">
-                    <b>Valor: R$ 70.00</b>
-                    <option value="quantidade">escolha a quantidade</option>
-                    <input class="txt" name="qtd" type="text" placeholder="Quantdade" required>
+                <div class="gas">
+                    <b>Gás encanado</b><br><br>
+                    <img src="imagens/gas.png" class="img"><br>
+                    <p>Mensalidade a partir de <b> R$ 60.00</b></p>
 
-                    <input type="submit" value="Compra" class="botaoEnviar">
-                </form>
+                </div>
+                <div class="btj">
+                    <b>Compre seu botijão de gás</b><br>
+                    <img src="imagens/botijao.png">
+                    <form action="Venda.jsp" method="post">
+                        <b>Valor: R$ 70.00</b>
+                        <option value="quantidade">escolha a quantidade</option>
+                        <input class="txt" name="qtd" type="number" placeholder="Quantdade" required>
+
+                        <input type="submit" value="Compra" class="botaoEnviar">
+                    </form>
+                </div>
             </div>
         </section>
     </body>

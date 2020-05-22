@@ -1,7 +1,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/xml" pageEncoding="UTF-8"%>
-<%@include file="../conecta.jsp" %>
+<%@include file="conecta.jsp" %>
 <%
     response.setHeader("Cache-Control", "no-cache");
     response.setHeader("Pragma", "no-cache");
@@ -13,10 +13,9 @@
     try{
                 
         if(Cpf!=null){
-           String sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
+           String sql = "SELECT * FROM venda WHERE cpf = ?";
                     pstmt = con.prepareStatement(sql);
                     pstmt.setString(1, Cpf);
-                    pstmt.setString(2, "nao");
                  ResultSet  rs = pstmt.executeQuery();
             //ResultSet rs = stm.executeQuery("select * from boleto where cpf='"+BLT+"'");
             while(rs.next()){

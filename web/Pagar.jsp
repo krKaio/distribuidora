@@ -2,85 +2,142 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
-<%@ include file="conecta.jsp" %>
+<%@include file="conecta.jsp" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <title>Boletos em aberto</title>
-        <style>
-            body {
-                text-align: center;
-                background-color: #F5F5F5;
-            }
-            #conterner {
-                margin: 0 auto;
-                margin-top: 10px;
-                width: 90%;
-                padding: 20px;
-                color: #000000;
-            }
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="lib/jquery-1.11.1.js"></script>
+        <title>Boletos</title>
+    </head>
+    <script>
+        function processar(codigo, acao) {
 
-            #tabe {
-                margin-top: 20px;
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
-            td, th {
-                border: 2px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }.botaoEnviar {
-                margin-top: 2%;
-                width: 90%;
-                text-align: center;
-                padding: 10px;
-                border: 1px solid #eee;
-                border-radius: 5px;
-                background-color: #ADD8E6;
-                font-size: 12px;
-                font-weight: bold;
-                border: 1px solid #000;
-            }
-            strong {
-                font-family: arial, sans-serif;
-                font-weight: bold;
-            }
-            .btn {
-                margin-left: 14%;
-                text-align: center;
-                padding: 10px;
-                border: 1px solid #eee;
-                border-radius: 5px;
-                background-color: #ADD8E6;
-                font-size: 12px;
-                font-weight: bold;
-                color: #000;	
-                text-decoration: none;
-                border: 1px solid #000;
-                font-size: 10.5pt;
-            }
-            .bt {
-                text-align: center;
-                padding: 10px;
-                border: 1px solid #eee;
-                border-radius: 5px;
-                background-color: #ADD8E6;
-                font-size: 12px;
-                font-weight: bold;
-                color: #000;	
-                text-decoration: none;
-                border: 1px solid #000;
-                font-size: 10.5pt;
-            }
-            hr{
-                margin-top: 20px;
-                border: 1px solid #dddddd;
-                border-radius: 5px;
-            }
+            var endereco = "", saida = "", cod = "";
+            $("#tabelaBoleto").empty();
+            if (acao == "B")
+                endereco = "BoletoGerado.jsp?cpf=" + $("#text").val();
+            else if (acao == "P")
+                endereco = "Pagando.jsp?id=" + $("#text").val();
 
+
+            $.ajax({
+                url: endereco,
+                success: function (xml) {
+
+                    saida += "<table id='tabe'><tr><th>cpf</th><th>nome</th><th>descricao</th><th>quantidade</th><th>valor</th><th>total</th><th>data</th><th>pago</th></tr>";
+                    $(xml).find("boleto").each(function () {
+                        saida += "<td>" + $(this).find("cpf").text() + "</td>";
+                        saida += "<td>" + $(this).find("nome").text() + "</td>";
+                        saida += "<td>" + $(this).find("desc").text() + "</td>";
+                        saida += "<td>" + $(this).find("qtd").text() + "</td>";
+                        saida += "<td>" + $(this).find("valor").text() + "</td>";
+                        saida += "<td>" + $(this).find("total").text() + "</td>";
+                        saida += "<td>" + $(this).find("dt").text() + "</td>";
+                        saida += "<td>" + $(this).find("pago").text() + "</td>";
+                        saida += "<td><a href='Pagando.jsp?id=" + $(this).find('bt').text() + "' onclick='processar(" + $(this).find("bt").text() + ", \"P\")'><input type='button' name='pagar' value='PAGAR' class='botaoEnviar'></a></td></tr>";
+                    });
+                    saida += "</table>";
+                    $("#tabelaBoleto").append(saida);
+                },
+
+                error: function () {
+                    alert("Processo não concluído");
+                }
+            });
+
+
+        }
+
+        $(function () {
+            $("#text").ready(function () {
+                processar(this.value, "B");
+            });
+        });
+
+
+    </script>
+    <style>
+        body {
+            text-align: center;
+            background-color: #F5F5F5;
+        }
+        #conterner {
+            margin: 0 auto;
+            margin-top: 10px;
+            width: 90%;
+            padding: 20px;
+            color: #000000;
+        }
+
+        #tabe {
+            margin-top: 20px;
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 2px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        .botaoEnviar {
+            margin-top: 2%;
+            width: 90%;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #ADD8E6;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #000;
+        }
+        strong {
+            font-family: arial, sans-serif;
+            font-weight: bold;
+        }
+        .btn {
+            margin-left: 14%;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #ADD8E6;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;	
+            text-decoration: none;
+            border: 1px solid #000;
+            font-size: 10.5pt;
+        }
+        .bt {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #ADD8E6;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;	
+            text-decoration: none;
+            border: 1px solid #000;
+            font-size: 10.5pt;
+        }
+        hr{
+            margin-top: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+        }
+        #caixa {
+            margin: auto;
+            margin-top: 1%;
+            width: 70%;
+            border: 3px solid #000;
+            padding: 10px;
+            background-color: #F5F5F5;
+        }
             section{
                 margin: auto;
                 margin-top: 5%;
@@ -123,117 +180,60 @@
                 height: 60px;
             }
         </style>
+        <body>
+            <section id="caixa"> 
+                <h2 class="titulo">Distribuidora de Gás</h2>
+                <hr>
+                <div class="left">
+                    <%                    request.setCharacterEncoding("UTF-8");
+                        response.setCharacterEncoding("UTF-8");
 
-    </head>
+                        String cpf = (String) session.getAttribute("cpf");
+                        String codigo = (String) session.getAttribute("codigo");
+                        String nome = (String) session.getAttribute("nome");
 
-    <body>
-        <section>
-            <h1>Distituidora de Gás</h1>
-            <div class="left">
-                <%                    request.setCharacterEncoding("UTF-8");
-                    response.setCharacterEncoding("UTF-8");
+                        if (nome == null) {
+                            response.sendRedirect("Login.jsp");
+                        } else {
+                            out.println("Bem vindo, " + nome + "<br>");
+                        }
+                        String ql;
+                        String pag = "sim";
 
-                    String cpf = (String) session.getAttribute("cpf");
-                    String codigo = (String) session.getAttribute("codigo");
-                    String nome = (String) session.getAttribute("nome");
-
-                    if (nome == null) {
-                        response.sendRedirect("Login.jsp");
-                    } else {
-                        out.println("Bem vindo, " + nome + "<br>");
-                    }
-                    String ql;
-                    String pag = "sim";
-
-                    
-
-                    Date data2 = new Date(); 
-                    Calendar c = new GregorianCalendar(); 
-                    c.setTime(data2); 
-                    int dia = c.get(Calendar.DAY_OF_MONTH);
-                    int ms = c.get(Calendar.MONTH) +1; 
-                    int ano = c.get(Calendar.YEAR);
-                    
-                    
-
-
-                %>
-            </div>
-            <div class="right">
-                <a href="Deslogar.jsp">
-                    <img src="imagens/deslogar.png" class="des">
-                </a>
-                <br>
-                <%=dia+"/"+ms+"/"+ano%>
-            </div>
-            <nav>
-                <a class="btn" href="Home.jsp">Home</a>
-                <a class="btn" href="SegundaVia.jsp">2° Via Boletos</a>
-                <a class="btn" href="Pagar.jsp">Boletos</a>
-                <a class="btn" href="MeuPagamento.jsp">Meus Pagamentos </a>
-                <a class="btn" href="Cadastro.jsp">Se tornar mensalista</a>
-                <a class="btn" href="Redirecionamentos.jsp">Minha conta</a>
-            </nav>
-            <hr>
-
-            <div id="conterner">
-
-                <strong>BOLETOS EM ABERTOS</strong>
-                <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
-                    String sql;
-                    String pg = "nao";
-
-                    try {
-                        sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
-                        pstmt = con.prepareStatement(sql);
-                        pstmt.setString(1, cpf);
-                        pstmt.setString(2, pg);
-                        rs = pstmt.executeQuery();
-                        if (rs.isBeforeFirst()) {
-                %>
-
-                <table id="tabe">
-                    <tr>
-                        <th width="200"><strong>Cpf</strong></th>
-                        <th width="200"><strong>nome</strong></th>
-                        <th width="200"><strong>descrisção</strong></th>
-                        <th width="200"><strong>quantidade</strong></th>
-                        <th width="80"><strong>valor</strong></th>
-                        <th width="80"><strong>total</strong></th>
-                        <th width="100"><strong>Data</strong></th>
-                        <th width="100"><strong>Pago</strong></th>
-                    </tr>
-
-                    <%
-                        while (rs.next()) {
-                            String pago = rs.getString("pago");
-                            String v_nome = rs.getString("nome");
-                            String v_cpf = rs.getString("cpf");
-                            String desc = rs.getString("descricao");
-                            int qtd = rs.getInt("qtd");
-                            float valor = rs.getFloat("valor");
-                            float total = rs.getFloat("total");
-                            String dt = rs.getString("dt_venda");
-                            if (pago.equals("nao")) {
 
                     %>
-                    <tr>            
-                        <td><%= v_cpf%></td>
-                        <td><%= v_nome%></td>
-                        <td><%= desc%></td>
-                        <td><%= qtd%></td>
-                        <td>R$ <%= valor%></td>
-                        <td>R$ <%= total%></td>
-                        <td><%= dt%></td>
-                        <td><%= pago%></td>
-                        <td><a href="Pagando.jsp?id=<%= rs.getString("id_venda")%>"><input type="button" name="pagar" value="PAGAR" class="botaoEnviar"></a></td>
-                    </tr>
+                </div>
+                <div class="right">
+                    <a href="Deslogar.jsp">
+                        <img src="imagens/deslogar.png" class="des">
+                    </a>
+                    <br>
+                </div>
+                <nav>
+                    <a class="btn" href="Home.jsp">Home</a>
+                    <a class="btn" href="SegundaVia.jsp">2° Via Boletos</a>
+                    <a class="btn" href="Pagar.jsp">Boletos</a>
+                    <a class="btn" href="MeuPagamento.jsp">Meus Pagamentos </a>
+                    <a class="btn" href="Cadastro.jsp">Se tornar mensalista</a>
+                    <a class="btn" href="Redirecionamentos.jsp">Minha conta</a>
+                </nav>
+                <hr>
+                <div id="conterner">
+                    <strong>BOLETOS EM ABERTOS</strong>
+                    <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
+                        String sql;
+                        String pg = "nao";
+
+                        try {
+                            sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
+                            pstmt = con.prepareStatement(sql);
+                            pstmt.setString(1, cpf);
+                            pstmt.setString(2, pg);
+                            rs = pstmt.executeQuery();
+                            if (rs.isBeforeFirst()) {
+                    %>
+                    <div id="tabelaBoleto"></div>
                     <%
-                            }
-                        }
-                        rs.close();
-                        stm.close();
-                        con.close();
                     } else {
                     %>
                     <p><strong>Você não possui pagamentos pendentes</strong></p>
@@ -256,9 +256,8 @@
                             }
                         }
                     %> 
-                </table>
-                <br><a class="bt" href="Home.jsp">Voltar a página inicial</a> 
-            </div>
-        </section>
-    </body>
-</html>
+                    <br><a class="bt" href="Home.jsp">Voltar a página inicial</a> 
+                </div>
+            </section>
+        </body>
+    </html>

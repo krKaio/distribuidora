@@ -1,3 +1,5 @@
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@include file="../conecta.jsp" %>
@@ -10,142 +12,256 @@
         <title>Boletos</title>
     </head>
     <script>
-        function processar(codigo, acao){
-            
-            var endereco="", saida="", cod="";
-            $("#tabelaBoleto").empty(); 
-                 if(acao=="B") endereco = "../Pagando.jsp?id="+$("#text").val();
-                 
-                 
-                $.ajax({ 
-                    url : endereco,
-                    success : function(xml){
-                        
-                        saida +=  "<table border='1'><tr><td>cpf</td><td>nome</td><td>descricao</td><td>quantidade</td><td>valor</td><td>total</td><td>data</td><td>pago</td></tr>";
-                        $(xml).find("venda").each(function(){                            
-                                saida += "<tr class='linha'><td> "+ $(this).find("modelo").text()+"</td>"; 
-                                saida += "<td>"+ $(this).find("cpf").text()+"</td>";
-                                saida += "<td>"+ $(this).find("nome").text()+"</td>";
-                                saida += "<td>"+ $(this).find("cpf").text()+"</td>";
-                                saida += "<td>"+ $(this).find("descricao").text()+"</td>";
-                                saida += "<td>"+ $(this).find("valor").text()+"</td>";
-                                saida += "<td>"+ $(this).find("total").text()+"</td>";
-                                saida += "<td>"+ $(this).find("dt_venda").text()+"</td>";
-                                saida += "<td>"+ $(this).find("pago").text()+"</td>";
-                                saida += "<td><a href='#' onclick='processar("+$(this).find("id_venda").text()+">Excluir</a></td></tr>"; 
-                            });
-                            saida += "</table>";
-                            $("#tabelaBoleto").append(saida);       
+        function processar(codigo, acao) {
+
+            var endereco = "", saida = "", cod = "";
+            $("#tabelaBoleto").empty();
+            if (acao == "B")
+                endereco = "BoletoGerado.jsp?cpf=" + $("#text").val();
+            else if (acao == "P")
+                endereco = "../Pagando.jsp?id=" + $("#text").val();
+
+
+            $.ajax({
+                url: endereco,
+                success: function (xml) {
+
+                    saida += "<table id='tabe'><tr><th>cpf</th><th>nome</th><th>descricao</th><th>quantidade</th><th>valor</th><th>total</th><th>data</th><th>pago</th></tr>";
+                    $(xml).find("boleto").each(function () {
+                        saida += "<td>" + $(this).find("cpf").text() + "</td>";
+                        saida += "<td>" + $(this).find("nome").text() + "</td>";
+                        saida += "<td>" + $(this).find("desc").text() + "</td>";
+                        saida += "<td>" + $(this).find("qtd").text() + "</td>";
+                        saida += "<td>" + $(this).find("valor").text() + "</td>";
+                        saida += "<td>" + $(this).find("total").text() + "</td>";
+                        saida += "<td>" + $(this).find("dt").text() + "</td>";
+                        saida += "<td>" + $(this).find("pago").text() + "</td>";
+                        saida += "<td><a href='../Pagando.jsp?id=" + $(this).find('bt').text() + "' onclick='processar(" + $(this).find("bt").text() + ", \"P\")'><input type='button' name='pagar' value='PAGAR' class='botaoEnviar'></a></td></tr>";
+                    });
+                    saida += "</table>";
+                    $("#tabelaBoleto").append(saida);
                 },
-                            
-                    error: function(){	alert("Processo não concluído");  }
+
+                error: function () {
+                    alert("Processo não concluído");
+                }
             });
-            
-            
+
+
         }
-        
-        $(function(){
-            $("#text").ready(function(){
-                processar(this.value,"B");
-                });                 
+
+        $(function () {
+            $("#text").ready(function () {
+                processar(this.value, "B");
+            });
         });
-        
-        
+
+
     </script>
     <style>
-            #bg1{
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                background-color: rgba(0,0,0,.8);
-                position: fixed;
-                display: none;
+        body {
+            text-align: center;
+            background-color: #F5F5F5;
+        }
+        #conterner {
+            margin: 0 auto;
+            margin-top: 10px;
+            width: 90%;
+            padding: 20px;
+            color: #000000;
+        }
 
-            }
-            #bg1:target{
-                display: block;
-            }
-            .box1{
-                background-color: rgba(146, 146, 146, 0.45);
-                width: 600px;
-                height: 210px;
-                position: absolute;
-                margin-left: 37%;
-                left: 1%;
-                margin-top: 100px;
-                top: -800px;
-                border: 2px solid #fff;
-            }
-            #bg1:target ~.box1{
-                top: 50px;
-                transition: all .3s;
-                transition-delay: .2s;
-            }
-            .box1 img{
-                position: absolute;
-            }
-            #close1{
-                color: #fff;
-                font-family: 'Arial';
-                text-decoration: none;
-                font-size: 35px;
-                position: absolute;
-                background-color: #000;
-                width: 120px;
-                height: 40px;
-                text-align: center;
-                top: 0;
-                margin-top: 30%;
-                margin-left: -13%
-            }
-            #close1:hover{
-                opacity: .6;
-            }
-            #Consulta{
-                font-size: 1.5em;
-                display: inline-block;
-                width: 300px;
-                margin: 1.2%;
+        #tabe {
+            margin-top: 20px;
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 2px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }.botaoEnviar {
+            margin-top: 2%;
+            width: 90%;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #ADD8E6;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #000;
+        }
+        strong {
+            font-family: arial, sans-serif;
+            font-weight: bold;
+        }
+        .btn {
+            margin-left: 14%;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #ADD8E6;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;	
+            text-decoration: none;
+            border: 1px solid #000;
+            font-size: 10.5pt;
+        }
+        .bt {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #ADD8E6;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;	
+            text-decoration: none;
+            border: 1px solid #000;
+            font-size: 10.5pt;
+        }
+        hr{
+            margin-top: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+        }
 
-            }
-        </style>
+        section{
+            margin: auto;
+            margin-top: 5%;
+            width: 70%;
+            border: 3px solid #000;
+            padding: 10px;
+            padding-bottom: 15px;
+        }  
+        .left{
+            width: 40%;
+            text-align: left;
+            margin-right: 50px;
+            display: inline-block;
+        }
+        .right{
+            width: 40%;
+            text-align: right;
+            margin-left: 50px;
+            display: inline-block;   
+        }
+        nav{
+            text-align: center;
+            margin-top: 50px;
+            display: block;
+        }
+        nav .btn{
+            margin: 5px;
+        }
+        .btj{
+            width: 35%;
+            margin: 20px;
+            margin-top: 50px;
+            padding: 10px;
+            border: 1px solid;
+            border-radius: 10px;
+
+        }
+        .des{
+            width: 50px;
+            height: 60px;
+        }
+    </style>
     <body>
-        <div>
-            <%
-                    String usuario = (String) session.getAttribute("cpf");
-                    
-                    if (usuario == null) {
-                        response.sendRedirect("../Login.jsp");
-                    } else {
-                        out.println("Bem vindo, " + "<input type='text' name='cpf' id='text' value='"+usuario+"' size='5' readonly>"
-                        + "<br>");
-                    }
-            %>
-        </div>
+       
         <br><br>
-        <form action='../Pagando.jsp' method='post'>
-        <div id="tabelaBoleto"></div>
-         vai puxar o cod para pagamento <select name="boleto" >
-            <option value="0">Boleto A Pagar</option>
-            <%
-               String resp = "";
-                try{
-                    ResultSet rs = stm.executeQuery("SELECT * FROM venda where pago= 'nao' and cpf ='"+usuario+"'");
-                    while(rs.next()){
-                        resp+="<option value='"+rs.getInt("id_venda")+"'>";
-                        resp+=rs.getString("id_venda")+"</option>";
+        <section>
+            <h1>Distituidora de Gás</h1>
+            <div class="left">
+                <%                    request.setCharacterEncoding("UTF-8");
+                    response.setCharacterEncoding("UTF-8");
+
+                    String cpf = (String) session.getAttribute("cpf");
+                    String codigo = (String) session.getAttribute("codigo");
+                    String nome = (String) session.getAttribute("nome");
+
+                    if (nome == null) {
+                        response.sendRedirect("Login.jsp");
+                    } else {
+                        out.println("Bem vindo, " + nome + "<br>");
                     }
-                    rs.close();
-                }catch(Exception ex){
-                    resp = "<option>Erro ao carregar os boleto" + ex.toString() + "</option>";
-                }
-                stm.close();
-                con.close();                
-                out.println(resp);
-            %></select>
-            <a href='../Pagando.jsp'> <input type='submit' value='PAGAR' name='pagando'></a>
-        </form>
-        
+                    String ql;
+                    String pag = "sim";
+
+                    Date data2 = new Date();
+                    Calendar c = new GregorianCalendar();
+                    c.setTime(data2);
+                    int dia = c.get(Calendar.DAY_OF_MONTH);
+                    int ms = c.get(Calendar.MONTH) + 1;
+                    int ano = c.get(Calendar.YEAR);
+
+
+                %>
+            </div>
+            <div class="right">
+                <a href="Deslogar.jsp">
+                    <img src="imagens/deslogar.png" class="des">
+                </a>
+                <br>
+                <%=dia + "/" + ms + "/" + ano%>
+            </div>
+            <nav>
+                <a class="btn" href="Home.jsp">Home</a>
+                <a class="btn" href="SegundaVia.jsp">2° Via Boletos</a>
+                <a class="btn" href="Pagar.jsp">Boletos</a>
+                <a class="btn" href="../MeuPagamento.jsp">Meus Pagamentos </a>
+                <a class="btn" href="Cadastro.jsp">Se tornar mensalista</a>
+                <a class="btn" href="Redirecionamentos.jsp">Minha conta</a>
+            </nav>
+            <hr>
+            <div id="conterner">
+                 <strong>BOLETOS EM ABERTOS</strong>
+                 <%                ResultSet rs; //objeto que irá guardar o retorno da consulta
+                    String sql;
+                    String pg = "nao";
+
+                    try {
+                        sql = "SELECT * FROM venda WHERE cpf = ? and pago = ?";
+                        pstmt = con.prepareStatement(sql);
+                        pstmt.setString(1, cpf);
+                        pstmt.setString(2, pg);
+                        rs = pstmt.executeQuery();
+                        if (rs.isBeforeFirst()) {
+                %>
+                <div id="tabelaBoleto"></div>
+                 <%
+                            
+                        
+                       
+                    } else {
+                    %>
+                    <p><strong>Você não possui pagamentos pendentes</strong></p>
+                    <%
+                            }
+                        } catch (Exception ex) {
+                            out.print("<br/><br/>Desculpe, mas algo errado aconteceu abrindo este BD...<br/><br/>");
+                        } finally {
+                            try {
+                                if (stm != null) {
+                                    stm.close();
+                                    stm = null;
+                                }
+                                if (con != null) {
+                                    con.close();
+                                    con = null;
+                                }
+                            } catch (Exception e1) {
+                                out.println("<h3>" + e1 + "</h3>");
+                            }
+                        }
+                    %> 
+                <br><a class="bt" href="Home.jsp">Voltar a página inicial</a> 
+            </div>
+        </section>
     </body>
 </html>

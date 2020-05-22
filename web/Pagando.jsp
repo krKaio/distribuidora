@@ -174,7 +174,8 @@
                     //        stm.close();
                     //       con.close();
                     //response.sendRedirect("Pagar.jsp");
-                    while (rs.next()) {
+                    if (rs.isBeforeFirst()) {
+                        while (rs.next()) {
             %>
             <form action="Pago.jsp" method="post">
                 <strong>Valor a pagar: R$ <%=rs.getString("total")%></strong><br>
@@ -185,6 +186,9 @@
             </form>
 
             <%
+                        }
+                    } else {
+                        out.print("<script>alert ('Não enviouu o id');</script>");
                     }
                 } catch (SQLException ex) {
                     out.print(ex.getMessage());
